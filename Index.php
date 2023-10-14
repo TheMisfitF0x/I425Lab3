@@ -205,12 +205,13 @@ $app->patch('/orders/{id}', function ($request, $response, $args) {
     }
     $order->save();
     if ($order->id) {
-        $payload = ['Order_Id' => $order->id,
-            'Warehouse_Id'=>$order->Warehouse_Id,
-            'Cost'=>$order->Cost,
-            'User_id'=>$order->User_id,
-            'Product_Id'=>$order->Product_Id,
-            'Date_Created'=>$order->Date_Created
+        $payload = ['order_id' => $order->id,
+            'warehouse_id'=>$order->Warehouse_Id,
+            'cost'=>$order->Cost,
+            'user_id'=>$order->User_id,
+            'product_id'=>$order->Product_Id,
+            'date_created'=>$order->Date_Created,
+            'order_uri' => '/order/' . $order->id
         ];
         return $response->withStatus(200)->withJson($payload);
     } else {
@@ -234,6 +235,91 @@ $app->delete('/orders/{id}', function ($request, $response, $args) {
 //END OF ORDERS~~~~~~~~~~~~~~~!
 
 //START OF USERS~~~~~~~~~~~~~~!
+
+//GET all users
+$app->get('/users', function(Request $request, Response $response, array $args){
+    $users = User::all();
+    $payload = [];
+
+    foreach ($users as $user){
+        $payload[$user->id] = ['username'=>$user->Username,
+            'dob'=>$user->Dob,
+            'date_created'=>$user->Date_Created
+        ];
+    }
+    return $response->withStatus(200)->withJson($payload);
+});
+
+//GET single user
+$app->get('/users/{id}', function(Request $request, Response $response, array $args){
+    $id = $args['id'];
+    $user = new User();
+    $_user = $user->find($id);
+
+    $payload[$_user->id] = ['username'=>$_user->Username,
+        'dob'=>$_user->Dob,
+        'date_created'=>$_user->Date_Created
+    ];
+
+    return $response->withStatus(200)->withJson($payload);
+});
+
+//POST user
+$app->post('/users', function ($request, $response, $args) {
+    $user = new User();
+    $_username = $request->getParsedBodyParam('Username');
+    $_pass = $request->getParsedBodyParam('Pass');
+    $_dob = $request->getParsedBodyParam('Dob');
+    $_date_created = $request->getParsedBodyParam('Date_Created');
+    $user->Username = $_username;
+    $user->Pass = $_pass;
+    $user->Dob = $_dob;
+    $user->Date_Created = $_date_created;
+    $user->save();
+    if ($user->id) {
+        $payload = ['user_id' => $user->id,
+            'user_uri' => '/users/' . $user->id];
+        return $response->withStatus(201)->withJson($payload);
+    } else {
+        return $response->withStatus(500);
+    }
+});
+
+//PATCH User
+$app->patch('/users/{id}', function ($request, $response, $args) {
+    $id = $args['id'];
+    $user = User::findOrFail($id);
+    $params = $request->getParsedBody();
+    foreach ($params as $field => $value) {
+        $user->$field = $value;
+    }
+    $user->save();
+    if ($user->id) {
+        $payload = ['username'=>$user->Username,
+            'dob'=>$user->Dob,
+            'date_dreated'=>$user->Date_Created,
+            'user_uri' => '/users/' . $user->id
+
+        ];
+        return $response->withStatus(200)->withJson($payload);
+    } else {
+        return $response->withStatus(500);
+    }
+});
+
+//DELETE User
+$app->delete('/users/{id}', function ($request, $response, $args) {
+    $id = $args['id'];
+    $user = User::find($id);
+    $user->delete();
+    if ($user->exists) {
+        return $response->withStatus(500);
+    } else {
+        return $response->withStatus(204)->getBody()->write("User
+'/users/$id' has been deleted.");
+    }
+});
+
 
 $app->run();
 

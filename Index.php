@@ -118,6 +118,106 @@ $app->delete('/warehouses/{id}', function ($request, $response, $args) {
 
 //END OF WAREHOUSES~~~~~~~~~~~~~~~!
 
+//START OF ORDERS~~~~~~~~~~~~~~!
+
+//GET orders from single warehouse
+$app->get('/warehouses/{id}/orders', function(Request $request, Response $response, array $args){
+    $id = $args['id'];
+    $warehouse = new Warehouse();
+    $orders = $warehouse->find($id)->orders;
+
+    foreach($orders as $order){
+        $payload[$order->id] = ['Warehouse_Id'=>$order->Warehouse_Id,
+            'Cost'=>$order->Cost,
+            'User_id'=>$order->User_id,
+            'Product_Id'=>$order->Product_Id,
+            'Date_Created'=>$order->Date_Created
+        ];
+    }
+
+    return $response->withStatus(200)->withJson($payload);
+
+});
+
+//GET all orders
+$app->get('/orders', function(Request $request, Response $response, array $args){
+    $orders = Order::all();
+
+    $payload = [];
+
+    foreach ($orders as $order){
+        $payload[$order->id] = ['Warehouse_Id'=>$order->Warehouse_Id,
+            'Cost'=>$order->Cost,
+            'User_id'=>$order->User_id,
+            'Product_Id'=>$order->Product_Id,
+            'Date_Created'=>$order->Date_Created
+        ];
+    }
+    return $response->withStatus(200)->withJson($payload);
+});
+
+//GET single order
+$app->get('/order/{id}', function(Request $request, Response $response, array $args){
+    $id = $args['id'];
+    $order = new Order();
+    $_order = $order->find($id);
+
+    $payload[$_order->id] = ['Warehouse_Id'=>$_order->Warehouse_Id,
+        'Cost'=>$_order->Cost,
+        'User_id'=>$_order->User_id,
+        'Product_Id'=>$_order->Product_Id,
+        'Date_Created'=>$_order->Date_Created
+    ];
+
+    return $response->withStatus(200)->withJson($payload);
+});
+
+//POST Order
+$app->post('/orders', function ($request, $response, $args) {
+    $order = new Order();
+    $_warehouse_id = $request->getParsedBodyParam('Warehouse_Id', '');
+    $_cost = $request->getParsedBodyParam('Cost');
+    $_user_id = $request->getParsedBodyParam('User_id');
+    $_product_id = $request->getParsedBodyParam('Product_Id');
+    $_date_created = $request->getParsedBodyParam('Date_Created');
+    $order->Warehouse_Id = $_warehouse_id;
+    $order->Cost = $_cost;
+    $order->User_id = $_user_id;
+    $order->Product_Id = $_product_id;
+    $order->Date_Created = $_date_created;
+    $order->save();
+    if ($order->id) {
+        $payload = ['order_id' => $order->id,
+            'order_uri' => '/order/' . $order->id];
+        return $response->withStatus(201)->withJson($payload);
+    } else {
+        return $response->withStatus(500);
+    }
+});
+
+//PATCH Order
+$app->patch('/order/{id}', function ($request, $response, $args) {
+    $id = $args['id'];
+    $order = Order::findOrFail($id);
+    $params = $request->getParsedBody();
+    foreach ($params as $field => $value) {
+        $order->$field = $value;
+    }
+    $order->save();
+    if ($order->id) {
+        $payload = ['Order_Id' => $order->id,
+            'Warehouse_Id'=>$order->Warehouse_Id,
+            'Cost'=>$order->Cost,
+            'User_id'=>$order->User_id,
+            'Product_Id'=>$order->Product_Id,
+            'Date_Created'=>$order->Date_Created
+        ];
+        return $response->withStatus(200)->withJson($payload);
+    } else {
+        return $response->withStatus(500);
+    }
+});
+
 $app->run();
 
 

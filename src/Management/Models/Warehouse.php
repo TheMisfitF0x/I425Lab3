@@ -15,5 +15,10 @@ class Warehouse extends \Illuminate\Database\Eloquent\Model
     protected $primaryKey = 'id';
     public $timestamps = false;
 
+    //one to many relationship
+    public function orders(){
+        return $this->hasMany(Order::class, 'Warehouse_Id');
+    }
+
 
 }

@@ -8,7 +8,9 @@
 
 namespace Management\Models;
 
-class Order
+class Order extends \Illuminate\Database\Eloquent\Model
 {
-
+    protected $table =  'orders';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
 }

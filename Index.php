@@ -205,12 +205,12 @@ $app->patch('/orders/{id}', function ($request, $response, $args) {
     }
     $order->save();
     if ($order->id) {
-        $payload = ['order_id' => $order->id,
-            'warehouse_id'=>$order->Warehouse_Id,
-            'cost'=>$order->Cost,
-            'user_id'=>$order->User_id,
-            'product_id'=>$order->Product_Id,
-            'date_created'=>$order->Date_Created,
+        $payload = ['Order_Id' => $order->id,
+            'Warehouse_Id'=>$order->Warehouse_Id,
+            'Cost'=>$order->Cost,
+            'User_id'=>$order->User_id,
+            'Product_Id'=>$order->Product_Id,
+            'Date_Created'=>$order->Date_Created,
             'order_uri' => '/order/' . $order->id
         ];
         return $response->withStatus(200)->withJson($payload);
@@ -242,9 +242,9 @@ $app->get('/users', function(Request $request, Response $response, array $args){
     $payload = [];
 
     foreach ($users as $user){
-        $payload[$user->id] = ['username'=>$user->Username,
-            'dob'=>$user->Dob,
-            'date_created'=>$user->Date_Created
+        $payload[$user->id] = ['Username'=>$user->Username,
+            'Dob'=>$user->Dob,
+            'Date_Created'=>$user->Date_Created
         ];
     }
     return $response->withStatus(200)->withJson($payload);
@@ -256,9 +256,9 @@ $app->get('/users/{id}', function(Request $request, Response $response, array $a
     $user = new User();
     $_user = $user->find($id);
 
-    $payload[$_user->id] = ['username'=>$_user->Username,
-        'dob'=>$_user->Dob,
-        'date_created'=>$_user->Date_Created
+    $payload[$_user->id] = ['Username'=>$_user->Username,
+        'Dob'=>$_user->Dob,
+        'Date_Created'=>$_user->Date_Created
     ];
 
     return $response->withStatus(200)->withJson($payload);
@@ -277,7 +277,7 @@ $app->post('/users', function ($request, $response, $args) {
     $user->Date_Created = $_date_created;
     $user->save();
     if ($user->id) {
-        $payload = ['user_id' => $user->id,
+        $payload = ['User_Id' => $user->id,
             'user_uri' => '/users/' . $user->id];
         return $response->withStatus(201)->withJson($payload);
     } else {
@@ -295,9 +295,9 @@ $app->patch('/users/{id}', function ($request, $response, $args) {
     }
     $user->save();
     if ($user->id) {
-        $payload = ['username'=>$user->Username,
-            'dob'=>$user->Dob,
-            'date_dreated'=>$user->Date_Created,
+        $payload = ['Username'=>$user->Username,
+            'Dob'=>$user->Dob,
+            'Date_Created'=>$user->Date_Created,
             'user_uri' => '/users/' . $user->id
 
         ];

@@ -196,7 +196,7 @@ $app->post('/orders', function ($request, $response, $args) {
 });
 
 //PATCH Order
-$app->patch('/order/{id}', function ($request, $response, $args) {
+$app->patch('/orders/{id}', function ($request, $response, $args) {
     $id = $args['id'];
     $order = Order::findOrFail($id);
     $params = $request->getParsedBody();
@@ -217,6 +217,23 @@ $app->patch('/order/{id}', function ($request, $response, $args) {
         return $response->withStatus(500);
     }
 });
+
+//DELETE Order
+$app->delete('/orders/{id}', function ($request, $response, $args) {
+    $id = $args['id'];
+    $order = Order::find($id);
+    $order->delete();
+    if ($order->exists) {
+        return $response->withStatus(500);
+    } else {
+        return $response->withStatus(204)->getBody()->write("Order
+'/orders/$id' has been deleted.");
+    }
+});
+
+//END OF ORDERS~~~~~~~~~~~~~~~!
+
+//START OF USERS~~~~~~~~~~~~~~!
 
 $app->run();
 

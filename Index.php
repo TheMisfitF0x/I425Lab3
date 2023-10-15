@@ -324,3 +324,208 @@ $app->delete('/users/{id}', function ($request, $response, $args) {
 $app->run();
 
 
+//START OF Employees~~~~~~~~~~~~~~!
+// Employee Endpoints
+$app->group('/employees', function ($app) {
+    // GET all employees
+    $app->get('', function (Request $request, Response $response) {
+        $employees = Employee::all();
+        $payload = [];
+
+        foreach ($employees as $employee) {
+            $payload[$employee->id] = [
+                'Name' => $employee->Name,
+                'Dob' => $employee->Dob,
+                'Date_Hired' => $employee->Date_Hired
+            ];
+        }
+
+        return $response->withStatus(200)->withJson($payload);
+    });
+
+    // GET single employee
+    $app->get('/{id}', function ($request, $response, $args) {
+        $id = $args['id'];
+        $employee = Employee::find($id);
+
+        if (!$employee) {
+            return $response->withStatus(404)->withJson(['error' => 'Employee not found']);
+        }
+
+        $payload[$employee->id] = [
+            'Name' => $employee->Name,
+            'Dob' => $employee->Dob,
+            'Date_Hired' => $employee->Date_Hired
+        ];
+
+        return $response->withStatus(200)->withJson($payload);
+    });
+
+    // POST Employee
+    $app->post('', function ($request, $response, $args) {
+        $employee = new Employee();
+        $employee->Name = $request->getParsedBodyParam('Name');
+        $employee->Dob = $request->getParsedBodyParam('Dob');
+        $employee->Date_Hired = $request->getParsedBodyParam('Date_Hired');
+        $employee->save();
+
+        if ($employee->id) {
+            $payload = ['employee_id' => $employee->id, 'employee_uri' => '/employees/' . $employee->id];
+            return $response->withStatus(201)->withJson($payload);
+        } else {
+            return $response->withStatus(500);
+        }
+    });
+
+    // PATCH Employee
+    $app->patch('/{id}', function ($request, $response, $args) {
+        $id = $args['id'];
+        $employee = Employee::findOrFail($id);
+        $params = $request->getParsedBody();
+        foreach ($params as $field => $value) {
+            $employee->$field = $value;
+        }
+        $employee->save();
+
+        if ($employee->id) {
+            $payload = [
+                'employee_id' => $employee->id,
+                'Name' => $employee->Name,
+                'Dob' => $employee->Dob,
+                'Date_Hired' => $employee->Date_Hired,
+                'employee_uri' => '/employees/' . $employee->id
+            ];
+            return $response->withStatus(200)->withJson($payload);
+        } else {
+            return $response->withStatus(500);
+        }
+    });
+
+    // DELETE Employee
+    $app->delete('/{id}', function ($request, $response, $args) {
+        $id = $args['id'];
+        $employee = Employee::find($id);
+
+        if (!$employee) {
+            return $response->withStatus(404)->withJson(['error' => 'Employee not found']);
+        }
+
+        $employee->delete();
+
+        if ($employee->exists) {
+            return $response->withStatus(500)->withJson(['error' => 'Failed to delete employee']);
+        } else {
+            return $response->withStatus(204)->getBody()->write("Employee '/employees/$id' has been deleted.");
+        }
+    });
+});
+
+
+//END OF Employee~~~~~~~~~~~~~~!
+
+//START OF Product~~~~~~~~~~~~~~!
+
+// Product Endpoints
+$app->group('/products', function ($app) {
+    // GET all products
+    $app->get('', function (Request $request, Response $response) {
+        $products = Product::all();
+        $payload = [];
+
+        foreach ($products as $product) {
+            $payload[$product->id] = [
+                'Warehouse_Id' => $product->Warehouse_Id,
+                'Product_Name' => $product->Product_Name,
+                'Product_Desc' => $product->Product_Desc,
+                'Product_Weight' => $product->Product_Weight,
+                'Product_Count' => $product->Product_Count
+            ];
+        }
+
+        return $response->withStatus(200)->withJson($payload);
+    });
+
+    // GET single product
+    $app->get('/{id}', function ($request, $response, $args) {
+        $id = $args['id'];
+        $product = Product::find($id);
+
+        if (!$product) {
+            return $response->withStatus(404)->withJson(['error' => 'Product not found']);
+        }
+
+        $payload[$product->id] = [
+            'Warehouse_Id' => $product->Warehouse_Id,
+            'Product_Name' => $product->Product_Name,
+            'Product_Desc' => $product->Product_Desc,
+            'Product_Weight' => $product->Product_Weight,
+            'Product_Count' => $product->Product_Count
+        ];
+
+        return $response->withStatus(200)->withJson($payload);
+    });
+
+    // POST Product
+    $app->post('', function ($request, $response, $args) {
+        $product = new Product();
+        $product->Warehouse_Id = $request->getParsedBodyParam('Warehouse_Id');
+        $product->Product_Name = $request->getParsedBodyParam('Product_Name');
+        $product->Product_Desc = $request->getParsedBodyParam('Product_Desc');
+        $product->Product_Weight = $request->getParsedBodyParam('Product_Weight');
+        $product->Product_Count = $request->getParsedBodyParam('Product_Count');
+        $product->save();
+
+        if ($product->id) {
+            $payload = ['product_id' => $product->id, 'product_uri' => '/products/' . $product->id];
+            return $response->withStatus(201)->withJson($payload);
+        } else {
+            return $response->withStatus(500);
+        }
+    });
+
+    // PATCH Product
+    $app->patch('/{id}', function ($request, $response, $args) {
+        $id = $args['id'];
+        $product = Product::findOrFail($id);
+        $params = $request->getParsedBody();
+        foreach ($params as $field => $value) {
+            $product->$field = $value;
+        }
+        $product->save();
+
+        if ($product->id) {
+            $payload = [
+                'product_id' => $product->id,
+                'Warehouse_Id' => $product->Warehouse_Id,
+                'Product_Name' => $product->Product_Name,
+                'Product_Desc' => $product->Product_Desc,
+                'Product_Weight' => $product->Product_Weight,
+                'Product_Count' => $product->Product_Count,
+                'product_uri' => '/products/' . $product->id
+            ];
+            return $response->withStatus(200)->withJson($payload);
+        } else {
+            return $response->withStatus(500);
+        }
+    });
+
+    // DELETE Product
+    $app->delete('/{id}', function ($request, $response, $args) {
+        $id = $args['id'];
+        $product = Product::find($id);
+
+        if (!$product) {
+            return $response->withStatus(404)->withJson(['error' => 'Product not found']);
+        }
+
+        $product->delete();
+
+        if ($product->exists) {
+            return $response->withStatus(500)->withJson(['error' => 'Failed to delete product']);
+        } else {
+            return $response->withStatus(204)->getBody()->write("Product '/products/$id' has been deleted.");
+        }
+    });
+});
+//END OF Product~~~~~~~~~~~~~~!
+

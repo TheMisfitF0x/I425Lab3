@@ -8,7 +8,9 @@
 
 namespace Management\Models;
 
-class Employee
+class Employee extends \Illuminate\Database\Eloquent\Model
 {
-
+    protected $table =  'employee';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
 }

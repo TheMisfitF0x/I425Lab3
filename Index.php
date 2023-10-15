@@ -59,7 +59,7 @@ $app -> get('/warehouses/{id}', function($request, $response,$args) {
 //POST Warehouse
 $app->post('/warehouses', function ($request, $response, $args) {
     $warehouse = new Warehouse();
-    $_Location = $request->getParsedBodyParam('warehouse','');
+    $_Location = $request->getParsedBodyParam('Location','');
     $_Lease_Num = $request->getParsedBodyParam('Lease_Num');
     $_Sqft = $request->getParsedBodyParam('Sqft');
     $_Monthly_Cost = $request->getParsedBodyParam('Monthly_Cost');
@@ -157,7 +157,7 @@ $app->get('/orders', function(Request $request, Response $response, array $args)
 });
 
 //GET single order
-$app->get('/order/{id}', function(Request $request, Response $response, array $args){
+$app->get('/orders/{id}', function(Request $request, Response $response, array $args){
     $id = $args['id'];
     $order = new Order();
     $_order = $order->find($id);
@@ -188,7 +188,7 @@ $app->post('/orders', function ($request, $response, $args) {
     $order->save();
     if ($order->id) {
         $payload = ['order_id' => $order->id,
-            'order_uri' => '/order/' . $order->id];
+            'order_uri' => '/orders/' . $order->id];
         return $response->withStatus(201)->withJson($payload);
     } else {
         return $response->withStatus(500);
@@ -320,8 +320,8 @@ $app->delete('/users/{id}', function ($request, $response, $args) {
     }
 });
 
+//END OF USERS
 
-$app->run();
 
 
 //START OF Employees~~~~~~~~~~~~~~!
@@ -529,3 +529,4 @@ $app->group('/products', function ($app) {
 });
 //END OF Product~~~~~~~~~~~~~~!
 
+$app->run();

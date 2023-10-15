@@ -8,7 +8,9 @@
 
 namespace Management\Models;
 
-class Product
+class Product extends \Illuminate\Database\Eloquent\Model
 {
-
+    protected $table =  'products';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
 }

@@ -126,6 +126,8 @@ $app->get('/warehouses/{id}/orders', function(Request $request, Response $respon
     $warehouse = new Warehouse();
     $orders = $warehouse->find($id)->orders;
 
+    $payload = [];
+
     foreach($orders as $order){
         $payload[$order->id] = ['Warehouse_Id'=>$order->Warehouse_Id,
             'Cost'=>$order->Cost,
@@ -424,8 +426,29 @@ $app->group('/employees', function ($app) {
 //END OF Employee~~~~~~~~~~~~~~!
 
 //START OF Product~~~~~~~~~~~~~~!
-
 // Product Endpoints
+//GET products from single warehouse
+$app->get('/warehouses/{id}/products', function(Request $request, Response $response, array $args){
+    $id = $args['id'];
+    $warehouse = new Warehouse();
+    $products = $warehouse->find($id)->products;
+
+    $payload = [];
+
+    foreach ($products as $product) {
+        $payload[$product->id] = [
+            'Warehouse_Id' => $product->Warehouse_Id,
+            'Product_Name' => $product->Product_Name,
+            'Product_Desc' => $product->Product_Desc,
+            'Product_Weight' => $product->Product_Weight,
+            'Product_Count' => $product->Product_Count
+        ];
+    }
+
+    return $response->withStatus(200)->withJson($payload);
+
+});
+
 $app->group('/products', function ($app) {
     // GET all products
     $app->get('', function (Request $request, Response $response) {

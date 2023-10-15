@@ -13,4 +13,9 @@ class Product extends \Illuminate\Database\Eloquent\Model
     protected $table =  'products';
     protected $primaryKey = 'id';
     public $timestamps = false;
+
+    public function Warehouse()
+    {
+        $this->belongsTo(Warehouse::class, "Warehouse_Id");
+    }
 }

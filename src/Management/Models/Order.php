@@ -13,4 +13,10 @@ class Order extends \Illuminate\Database\Eloquent\Model
     protected $table =  'orders';
     protected $primaryKey = 'id';
     public $timestamps = false;
+
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class,"Warehouse_Id");
+    }
 }
+

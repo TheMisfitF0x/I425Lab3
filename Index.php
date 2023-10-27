@@ -240,16 +240,69 @@ $app->delete('/orders/{id}', function ($request, $response, $args) {
 
 //GET all users
 $app->get('/users', function(Request $request, Response $response, array $args){
-    $users = User::all();
-    $payload = [];
+    $count = User::count();
 
-    foreach ($users as $user){
-        $payload[$user->id] = ['Username'=>$user->Username,
-            'Dob'=>$user->Dob,
-            'Date_Created'=>$user->Date_Created
+    $params = $request->getQueryParams();
+
+    //Do limit and offset exist?
+    $limit = array_key_exists('limit', $params) ? (int)$params['limit'] : 10; //items per page
+    $offset = array_key_exists('offset', $params) ? (int)$params['offset'] : 0; // offset of the first item
+
+    //get search terms
+    $term = array_key_exists('q', $params) ? $params['q'] : null;
+
+    if(!is_null($term)){
+        $users = User::searchUsers($term);
+        $payload_final = [];
+        foreach ($users as $_user) {
+            $payload_final[$_user->id] = ['Username'=>$_user->Username,
+                'User_Id'=>$_user->id,
+                'Dob'=>$_user->Dob,
+                'Date_Created'=>$_user->Date_Created
+            ];
+        }
+    }else{
+
+
+
+        //Pagination
+        $links = User::getLinks($request, $limit, $offset);
+
+        //Sorting
+        $sort_key_array = User::getSortKeys($request);
+
+        //$query = User::all();
+        $query = User::skip($offset)->take($limit); // limit the rows
+
+        //Sort output by one or more keys and directions
+        foreach ($sort_key_array as $column => $direction){
+            $query->orderBy($column, $direction);
+        }
+
+        $users = $query->get();
+
+        $payload = [];
+
+        foreach ($users as $_user){
+            $payload[$_user->id] = ['Username'=>$_user->Username,
+                'User_Id'=>$_user->id,
+                'Dob'=>$_user->Dob,
+                'Date_Created'=>$_user->Date_Created
+            ];
+        }
+
+        $payload_final = [
+            'totalCount' => $count,
+            'limit' => $limit,
+            'offset' => $offset,
+            'links' => $links,
+            'sort' => $sort_key_array,
+            'data' => $payload
         ];
+
     }
-    return $response->withStatus(200)->withJson($payload);
+    
+    return $response->withStatus(200)->withJson($payload_final);
 });
 
 //GET single user

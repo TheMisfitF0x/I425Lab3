@@ -57,7 +57,7 @@ class User extends \Illuminate\Database\Eloquent\Model
         return $sort_key_array;
     }
 
-    //Search messages
+    //Search users
     public static function searchUsers($terms)
     {
         if (is_numeric($terms)) {

@@ -143,19 +143,69 @@ $app->get('/warehouses/{id}/orders', function(Request $request, Response $respon
 
 //GET all orders
 $app->get('/orders', function(Request $request, Response $response, array $args){
-    $orders = Order::all();
 
-    $payload = [];
+    $count = Order::count();
 
-    foreach ($orders as $order){
-        $payload[$order->id] = ['Warehouse_Id'=>$order->Warehouse_Id,
-            'Cost'=>$order->Cost,
-            'User_id'=>$order->User_id,
-            'Product_Id'=>$order->Product_Id,
-            'Date_Created'=>$order->Date_Created
+    $params = $request->getQueryParams();
+
+    //Do limit and offset exist?
+    $limit = array_key_exists('limit', $params) ? (int)$params['limit'] : 10; //items per page
+    $offset = array_key_exists('offset', $params) ? (int)$params['offset'] : 0; // offset of the first item
+
+    //get search terms
+    $term = array_key_exists('q', $params) ? $params['q'] : null;
+
+    if(!is_null($term)){
+        $orders = Order::searchOrders($term);
+        $payload_final = [];
+        foreach ($orders as $_order) {
+                $payload_final[$_order->id] = ['Order_Id'=>$_order->id,
+                    'Warehouse_Id'=>$_order->Warehouse_Id,
+                    'Cost'=>$_order->Cost,
+                    'User_id'=>$_order->User_id,
+                    'Product_Id'=>$_order->Product_Id,
+                    'Date_Created'=>$_order->Date_Created
+            ];
+        }
+    }else {
+        //Pagination
+        $links = Order::getLinks($request, $limit, $offset);
+
+        //Sorting
+        $sort_key_array = Order::getSortKeys($request);
+
+        $query = Order::skip($offset)->take($limit); // limit the rows
+
+        //Sort output by one or more keys and directions
+        foreach ($sort_key_array as $column => $direction) {
+            $query->orderBy($column, $direction);
+        }
+
+        $orders = $query->get();
+
+        $payload = [];
+
+        foreach ($orders as $_order) {
+            $payload[$_order->id] = ['Order_Id'=>$_order->id,
+                'Warehouse_Id'=>$_order->Warehouse_Id,
+                'Cost'=>$_order->Cost,
+                'User_id'=>$_order->User_id,
+                'Product_Id'=>$_order->Product_Id,
+                'Date_Created'=>$_order->Date_Created
+            ];
+        }
+
+        $payload_final = [
+            'totalCount' => $count,
+            'limit' => $limit,
+            'offset' => $offset,
+            'links' => $links,
+            'sort' => $sort_key_array,
+            'data' => $payload
         ];
     }
-    return $response->withStatus(200)->withJson($payload);
+    return $response->withStatus(200)->withJson($payload_final);
+    
 });
 
 //GET single order
@@ -261,21 +311,17 @@ $app->get('/users', function(Request $request, Response $response, array $args){
                 'Date_Created'=>$_user->Date_Created
             ];
         }
-    }else{
-
-
-
+    }else {
         //Pagination
         $links = User::getLinks($request, $limit, $offset);
 
         //Sorting
         $sort_key_array = User::getSortKeys($request);
 
-        //$query = User::all();
         $query = User::skip($offset)->take($limit); // limit the rows
 
         //Sort output by one or more keys and directions
-        foreach ($sort_key_array as $column => $direction){
+        foreach ($sort_key_array as $column => $direction) {
             $query->orderBy($column, $direction);
         }
 
@@ -283,11 +329,11 @@ $app->get('/users', function(Request $request, Response $response, array $args){
 
         $payload = [];
 
-        foreach ($users as $_user){
-            $payload[$_user->id] = ['Username'=>$_user->Username,
-                'User_Id'=>$_user->id,
-                'Dob'=>$_user->Dob,
-                'Date_Created'=>$_user->Date_Created
+        foreach ($users as $_user) {
+            $payload[$_user->id] = ['Username' => $_user->Username,
+                'User_Id' => $_user->id,
+                'Dob' => $_user->Dob,
+                'Date_Created' => $_user->Date_Created
             ];
         }
 
@@ -299,9 +345,7 @@ $app->get('/users', function(Request $request, Response $response, array $args){
             'sort' => $sort_key_array,
             'data' => $payload
         ];
-
     }
-    
     return $response->withStatus(200)->withJson($payload_final);
 });
 

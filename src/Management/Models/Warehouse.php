@@ -20,6 +20,7 @@ class Warehouse extends \Illuminate\Database\Eloquent\Model
         return $this->hasMany(Order::class, 'Warehouse_Id');
     }
 
+    //one to many relationship
     public function products()
     {
         return $this->hasMany(Product::class, 'Warehouse_Id');

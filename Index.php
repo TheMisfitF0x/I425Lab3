@@ -428,18 +428,62 @@ $app->delete('/users/{id}', function ($request, $response, $args) {
 $app->group('/employees', function ($app) {
     // GET all employees
     $app->get('', function (Request $request, Response $response) {
-        $employees = Employee::all();
-        $payload = [];
+        $count = Employee::count();
 
-        foreach ($employees as $employee) {
-            $payload[$employee->id] = [
-                'Name' => $employee->Name,
-                'Dob' => $employee->Dob,
-                'Date_Hired' => $employee->Date_Hired
+        $params = $request->getQueryParams();
+
+        //Do limit and offset exist?
+        $limit = array_key_exists('limit', $params) ? (int)$params['limit'] : 10; //items per page
+        $offset = array_key_exists('offset', $params) ? (int)$params['offset'] : 0; // offset of the first item
+
+        //get search terms
+        $term = array_key_exists('q', $params) ? $params['q'] : null;
+
+        if(!is_null($term)){
+            $employees = Employee::searchUsers($term);
+            $payload_final = [];
+            foreach ($employees as $employee) {
+                $payload_final[$employee->id] = [
+                    'Name' => $employee->Name,
+                    'Dob' => $employee->Dob,
+                    'Date_Hired' => $employee->Date_Hired
+                ];
+            }
+        }else {
+            //Pagination
+            $links = Employee::getLinks($request, $limit, $offset);
+
+            //Sorting
+            $sort_key_array = Employee::getSortKeys($request);
+
+            $query = Employee::skip($offset)->take($limit); // limit the rows
+
+            //Sort output by one or more keys and directions
+            foreach ($sort_key_array as $column => $direction) {
+                $query->orderBy($column, $direction);
+            }
+
+            $employees = $query->get();
+
+            $payload = [];
+            foreach ($employees as $employee) {
+                $payload[$employee->id] = [
+                    'Name' => $employee->Name,
+                    'Dob' => $employee->Dob,
+                    'Date_Hired' => $employee->Date_Hired
+                ];
+            }
+
+            $payload_final = [
+                'totalCount' => $count,
+                'limit' => $limit,
+                'offset' => $offset,
+                'links' => $links,
+                'sort' => $sort_key_array,
+                'data' => $payload
             ];
         }
-
-        return $response->withStatus(200)->withJson($payload);
+        return $response->withStatus(200)->withJson($payload_final);
     });
 
     // GET single employee

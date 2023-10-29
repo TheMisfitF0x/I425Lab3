@@ -26,6 +26,26 @@ class Employee extends \Illuminate\Database\Eloquent\Model
         return $results;
     }
 
+    // This function returns an array of links for pagination.
+    public static function getLinks($request, $limit, $offset)
+    {
+        $count = self::count();
+        $uri = $request->getUri();
+        $base_url = $uri->getBaseUrl();
+        $path = $uri->getPath();
+        $links = array();
+        $links[] = ['rel' => 'self', 'href' => $base_url . "/$path" . "?limit=$limit&offset=$offset"];
+        $links[] = ['rel' => 'first', 'href' => $base_url . "/$path" . "?limit=$limit&offset=0"];
+        if ($offset - $limit >= 0) {
+            $links[] = ['rel' => 'prev', 'href' => $base_url . "/$path" . "?limit=$limit&offset=" . ($offset - $limit)];
+        }
+        if ($offset + $limit < $count) {
+            $links[] = ['rel' => 'next', 'href' => $base_url . "/$path" . "?limit=$limit&offset=" . ($offset + $limit)];
+        }
+        $links[] = ['rel' => 'last', 'href' => $base_url . "/$path" . "?limit=$limit&offset=" . $limit * (ceil($count / $limit) - 1)];
+        return $links;
+    }
+
     //getSortKeys return an array for sorting features
     public static function getSortKeys($request){
         $sort_key_array = [];

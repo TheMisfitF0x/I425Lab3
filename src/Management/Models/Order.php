@@ -66,10 +66,10 @@ class Order extends \Illuminate\Database\Eloquent\Model
     public static function searchOrders($terms)
     {
         if (is_numeric($terms)) {
-            $query = self::where('id', "like", "%$terms%");
+            $query = self::where('id', "like", "%$terms%")
+                ->orWhere('Cost', 'like', "%$terms%");
         } else {
-            $query = self::where('Cost', 'like', "%$terms%")
-                ->orWhere('Date_Created', 'like', "%$terms%");
+            $query = self::where('Date_Created', 'like', "%$terms%");
         }
         $results = $query->get();
         return $results;

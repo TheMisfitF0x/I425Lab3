@@ -593,20 +593,68 @@ $app->get('/warehouses/{id}/products', function(Request $request, Response $resp
 $app->group('/products', function ($app) {
     // GET all products
     $app->get('', function (Request $request, Response $response) {
-        $products = Product::all();
-        $payload = [];
+        $count = Product::count();
 
-        foreach ($products as $product) {
-            $payload[$product->id] = [
-                'Warehouse_Id' => $product->Warehouse_Id,
-                'Product_Name' => $product->Product_Name,
-                'Product_Desc' => $product->Product_Desc,
-                'Product_Weight' => $product->Product_Weight,
-                'Product_Count' => $product->Product_Count
+        $params = $request->getQueryParams();
+
+        //Do limit and offset exist?
+        $limit = array_key_exists('limit', $params) ? (int)$params['limit'] : 10; //items per page
+        $offset = array_key_exists('offset', $params) ? (int)$params['offset'] : 0; // offset of the first item
+
+        //get search terms
+        $term = array_key_exists('q', $params) ? $params['q'] : null;
+
+        if(!is_null($term)){
+            $products = Product::searchProducts($term);
+            $payload_final = [];
+            foreach ($products as $_product) {
+                $payload_final[$_product->id] = ['Product_Id' => $_product->id,
+                'Warehouse_Id' => $_product->Warehouse_Id,
+                'Product_Name' => $_product->Product_Name,
+                'Product_Desc' => $_product->Product_Desc,
+                'Product_Weight' => $_product->Product_Weight,
+                'Product_Count' => $_product->Product_Count
+            ];
+            }
+        }else {
+            //Pagination
+            $links = Product::getLinks($request, $limit, $offset);
+
+            //Sorting
+            $sort_key_array = Product::getSortKeys($request);
+
+            $query = Product::skip($offset)->take($limit); // limit the rows
+
+            //Sort output by one or more keys and directions
+            foreach ($sort_key_array as $column => $direction) {
+                $query->orderBy($column, $direction);
+            }
+
+            $products = $query->get();
+
+            $payload = [];
+
+            foreach ($products as $_product) {
+                $payload[$_product->id] = [
+                    'Product_Id' => $_product->id,
+                    'Warehouse_Id' => $_product->Warehouse_Id,
+                    'Product_Name' => $_product->Product_Name,
+                    'Product_Desc' => $_product->Product_Desc,
+                    'Product_Weight' => $_product->Product_Weight,
+                    'Product_Count' => $_product->Product_Count
+                ];
+            }
+
+            $payload_final = [
+                'totalCount' => $count,
+                'limit' => $limit,
+                'offset' => $offset,
+                'links' => $links,
+                'sort' => $sort_key_array,
+                'data' => $payload
             ];
         }
-
-        return $response->withStatus(200)->withJson($payload);
+        return $response->withStatus(200)->withJson($payload_final);
     });
 
     // GET single product

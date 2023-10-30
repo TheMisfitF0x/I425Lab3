@@ -63,10 +63,11 @@ class Product extends \Illuminate\Database\Eloquent\Model
     // Search products
     public static function searchProducts($terms)
     {
-        $query = self::query();
-        foreach ($terms as $term) {
-            $query->orWhere('Product_Name', 'like', "%$term%")
-                ->orWhere('Product_Desc', 'like', "%$term%");
+        if (is_numeric($terms)) {
+            $query = self::where('id', "like", "%$terms%");
+        } else {
+            $query = self::where('Product_Name', 'like', "%$terms%")
+                ->orWhere('Product_Desc', 'like', "%$terms%");
         }
         $results = $query->get();
         return $results;

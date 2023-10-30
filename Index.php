@@ -440,7 +440,7 @@ $app->group('/employees', function ($app) {
         $term = array_key_exists('q', $params) ? $params['q'] : null;
 
         if(!is_null($term)){
-            $employees = Employee::searchUsers($term);
+            $employees = Employee::searchEmployees($term);
             $payload_final = [];
             foreach ($employees as $employee) {
                 $payload_final[$employee->id] = [

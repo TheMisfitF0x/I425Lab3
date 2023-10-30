@@ -1,6 +1,6 @@
 <?php
 /**
- * Author: Isaac Lowe
+ * Authors: Isaac Lowe, Logan Douglass, Logan Orender, Samuel Sibhatu
  * Date: 10/11/2023
  * File: Index.php
  * Description:

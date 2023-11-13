@@ -43,7 +43,6 @@ class EmployeeController
 
     public function update(Request $request, Response $response, array $args)
     {
-        // Insert a new student
         $employee = Employee::updateEmployee($request);
         if ($employee->id) {
             $results = [

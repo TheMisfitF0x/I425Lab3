@@ -19,7 +19,7 @@ return [
         'driver' => "mysql",
         'host' => 'localhost',
         'port' => 3306,
-        'database' => 'chatter',
+        'database' => 'inventory',
         'username' => 'phpuser',
         'password' => 'phpuser',
         'charset' => 'utf8',

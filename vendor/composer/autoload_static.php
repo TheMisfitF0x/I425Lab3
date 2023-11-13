@@ -14,6 +14,10 @@ class ComposerStaticInit505b0b751709837be9fb550e812d5c85
     );
 
     public static $prefixLengthsPsr4 = array (
+        'W' => 
+        array (
+            'Warehouse\\' => 10,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
@@ -27,10 +31,6 @@ class ComposerStaticInit505b0b751709837be9fb550e812d5c85
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
-        ),
-        'M' => 
-        array (
-            'Management\\' => 11,
         ),
         'I' => 
         array (
@@ -51,6 +51,10 @@ class ComposerStaticInit505b0b751709837be9fb550e812d5c85
     );
 
     public static $prefixDirsPsr4 = array (
+        'Warehouse\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/api',
+        ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
@@ -82,10 +86,6 @@ class ComposerStaticInit505b0b751709837be9fb550e812d5c85
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
-        ),
-        'Management\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src/Management',
         ),
         'Illuminate\\Support\\' => 
         array (

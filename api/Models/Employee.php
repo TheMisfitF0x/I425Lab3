@@ -6,7 +6,7 @@ use \Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     // The table associated with this model
-    protected $table = 'employees';
+    protected $table = 'employee';
     protected $primaryKey = 'id';
 
     public static function getEmployees($request){

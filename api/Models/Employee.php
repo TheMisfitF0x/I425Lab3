@@ -8,6 +8,7 @@ class Employee extends Model
     // The table associated with this model
     protected $table = 'employee';
     protected $primaryKey = 'id';
+    public $timestamps = false;
 
     public static function getEmployees($request){
         $count = self::count();

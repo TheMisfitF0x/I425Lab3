@@ -25,8 +25,8 @@ class OrderController
         $order = Order::createOrder($request);
         if ($order->id) {
             $results = [
-                'status' => 'Employee created',
-                'employee_uri' => '/orders/' . $order->id,
+                'status' => 'Order created',
+                'order_uri' => '/orders/' . $order->id,
                 'data' => $order
             ];
             $code = 201;
@@ -42,7 +42,7 @@ class OrderController
         if ($order->id) {
             $results = [
                 'status' => 'Order updated',
-                'message_uri' => '/orders/' . $order->id,
+                'order_uri' => '/orders/' . $order->id,
                 'data' => $order
             ];
             $code = 200;

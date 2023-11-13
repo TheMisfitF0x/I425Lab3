@@ -2,13 +2,13 @@
 /**
  * Authors: Isaac Lowe, Logan Douglass, Logan Orender, Samuel Sibhatu
  * Date: 10/11/2023
- * File: Index.php
+ * File: index.php
  * Description:
  */
 
 
 require __DIR__ . '/vendor/autoload.php';
-require __DIR__ . '/boostrap.php';
+require __DIR__ . '/config/bootstrap.php';
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;

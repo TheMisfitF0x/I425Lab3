@@ -3,6 +3,8 @@
 namespace Warehouse\Models;
 
 use \Illuminate\Database\Eloquent\Model;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 class User extends Model
 {
     // The table associated with this model

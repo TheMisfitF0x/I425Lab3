@@ -178,4 +178,14 @@ class User extends Model
         }
         return $sort_key_array;
     }
+
+    // Authenticate a user by username and password. Return the user.
+    public static function authenticateUser($username, $password)
+    {
+        $user = self::where('Username', $username)->first();
+        if (!$user) {
+            return false;
+        }
+        return password_verify($password, $user->Pass) ? $user : false;
+    }
 }

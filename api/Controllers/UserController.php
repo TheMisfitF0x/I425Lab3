@@ -1,7 +1,6 @@
 <?php
-
 namespace Warehouse\Controllers;
-
+use Warehouse\Models\Token;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Warehouse\Models\User;
@@ -74,4 +73,29 @@ class UserController
         return $response->withJson($results, $status_code,
             JSON_PRETTY_PRINT);
     }
+
+    // Validate a user with username and password. It returns a Bearer token on success
+    public function authBearer(Request $request, Response $response)
+    {
+        $params = $request->getParsedBody();
+        $username = $params['username'];
+        $password = $params['password'];
+        $user = User::authenticateUser($username, $password);
+        if ($user) {
+            $status_code = 200;
+            $token = Token::generateBearer($user->id);
+            $results = [
+                'status' => 'login successful',
+                'token' => $token
+            ];
+        } else {
+            $status_code = 401;
+            $results = [
+                'status' => 'login failed'
+            ];
+        }
+        return $response->withJson($results, $status_code,
+            JSON_PRETTY_PRINT);
+    }
+
 }

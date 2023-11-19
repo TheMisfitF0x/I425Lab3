@@ -4,7 +4,7 @@
 //use Warehouse\Authentication\MyAuthenticator;
 //use Warehouse\Authentication\BasicAuthenticator;
 //use Warehouse\Authentication\BearerAuthenticator;
-//use Warehouse\Authentication\JWTAuthenticator;
+use Warehouse\Authentication\JWTAuthenticator;
 
 $app->get('/', function ($request, $response, $args) {
     return $response->write('Hello, this is Warehouse Management API.');
@@ -71,7 +71,6 @@ $app->group('', function () {
 //})->add(new BearerAuthenticator());
 //$app->add(new MyAuthenticator());
 //$app->add(new BasicAuthenticator());
-//})->add(new JWTAuthenticator());
-});
+})->add(new JWTAuthenticator());
 //$app->add(new ChatterLogging());
 $app->run();

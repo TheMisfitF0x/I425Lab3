@@ -49,4 +49,29 @@ class UserController
         $code = array_key_exists('status', $results) ? 200 : 500;
         return $response->withJson($results, 200, JSON_PRETTY_PRINT);
     }
+
+    public function authJWT(Request $request, Response $response)
+    {
+        $params = $request->getParsedBody();
+        $username = $params['username'];
+        $password = $params['password'];
+        $user = User::authenticateUser($username, $password);
+        if ($user) {
+            $status_code = 200;
+            $jwt = User::generateJWT($user->id);
+            $results = [
+                'status' => 'login successful',
+                'jwt' => $jwt,
+                'name' => $user->Username
+            ];
+        } else {
+            $status_code = 401;
+            $results = [
+                'status' => 'login failed',
+            ];
+        }
+        //return $results;
+        return $response->withJson($results, $status_code,
+            JSON_PRETTY_PRINT);
+    }
 }

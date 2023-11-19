@@ -12,6 +12,9 @@ class User extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
 
+    const JWT_KEY = 'my token';//it can be any token that users like
+    const JWT_EXPIRE = 600;//experiation period in seconds
+
     public static function getUsers($request){
         $count = self::count();
 
@@ -189,5 +192,41 @@ class User extends Model
             return false;
         }
         return password_verify($password, $user->Pass) ? $user : false;
+    }
+
+    public static function generateJWT($id)
+    {
+        // Data for payload
+        $user = $user = self::findOrFail($id);
+        if (!$user) {
+            return false;
+        }
+        $key = self::JWT_KEY;
+        $expiration = time() + self::JWT_EXPIRE;
+        $issuer = 'odditywarehous-api.com';
+        $token = [
+            'iss' => $issuer,
+            'exp' => $expiration,
+            'iat' => time(),
+            'data' => [
+                'uid' => $id,
+                'name' => $user->Username,
+                'email' => $user->email,
+            ]];
+        // Generate and return a token
+        return JWT::encode(
+            $token, // data to be encoded in the JWT
+            $key, // the signing key
+            'HS256' // algorithm used to sign the token; defaults to HS256
+        );
+    }
+    // Verify a token
+    public static function validateJWT($token)
+    {
+        //$decoded = JWT::decode($token, self::JWT_KEY, array('HS256'));
+        //this is for php-jwt 5.0 version or lower
+        $decoded = JWT::decode($token, new Key(self::JWT_KEY, 'HS256'));
+        //this is for php-jwt 6.0 version or higher
+        return $decoded;
     }
 }

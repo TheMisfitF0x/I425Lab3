@@ -23,8 +23,8 @@ try {
     public function validateUser($request)
     {
         $rules = [
-            'Username' => v::noWhitespace()->notEmpty()->alnum(),
-            'Pass' => v::notEmpty(),
+            'username' => v::noWhitespace()->notEmpty()->alnum(),
+            'password' => v::notEmpty(),
             'email' => v::email()
         ];
         return self::validate($request, $rules);

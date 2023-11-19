@@ -1,8 +1,8 @@
 <?php
 
-use Warehouse\Authentication\MyAuthenticator;
+//use Warehouse\Authentication\MyAuthenticator;
 use Warehouse\Authentication\BasicAuthenticator;
-use Warehouse\Authentication\BearerAuthenticator;
+//use Warehouse\Authentication\BearerAuthenticator;
 use Warehouse\Authentication\JWTAuthenticator;
 
 $app->get('/', function ($request, $response, $args) {
@@ -66,11 +66,8 @@ $app->group('', function () {
         $this->delete('/{id}', 'ProductController:delete');
     });
 //->add(new MyAuthenticator());
-    //})->add(new BasicAuthenticator());
-
+})->add(new BasicAuthenticator());
 //})->add(new BearerAuthenticator());
-// })->add(new MyAuthenticator());
-//$app->add(new BasicAuthenticator());
-})->add(new JWTAuthenticator());
+//})->add(new JWTAuthenticator());
 //$app->add(new ChatterLogging());
 $app->run();

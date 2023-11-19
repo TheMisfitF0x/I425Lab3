@@ -61,7 +61,7 @@ class UserController
             $results = [
                 'status' => 'login successful',
                 'jwt' => $jwt,
-                'name' => $user->Username
+                'name' => $user->username
             ];
         } else {
             $status_code = 401;

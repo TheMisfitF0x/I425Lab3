@@ -24,7 +24,8 @@ try {
     {
         $rules = [
             'Username' => v::noWhitespace()->notEmpty()->alnum(),
-            'Pass' => v::notEmpty()
+            'Pass' => v::notEmpty(),
+            'email' => v::email()
         ];
         return self::validate($request, $rules);
     }

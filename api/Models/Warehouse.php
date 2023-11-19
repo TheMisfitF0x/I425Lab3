@@ -49,15 +49,15 @@ class Warehouse extends Model
         // Retrieve parameters from request body
         $params = $request->getParsedBody();
 
-        // Create a new User instance
+        // Create a new Warehouse instance
         $warehouse = new Warehouse();
 
-        // Set the user's attributes
+        // Set the warehouse's attributes
         foreach ($params as $field => $value) {
             $warehouse->$field = $value;
         }
 
-        // Insert the user into the database
+        // Insert the warehouse into the database
         $warehouse->save();
         return $warehouse;
     }
@@ -67,7 +67,7 @@ class Warehouse extends Model
         // Retrieve parameters from request body
         $params = $request->getParsedBody();
 
-        //Retrieve the user's id from url and then the user from the database
+        //Retrieve the warehouse's id from url and then the user from the database
         $id = $request->getAttribute('id');
         $warehouse = self::findOrFail($id);
 
@@ -75,7 +75,7 @@ class Warehouse extends Model
             $warehouse->$field = $value;
         }
 
-        // Update the professor
+        // Update the warehouse
         $warehouse->save();
         return $warehouse;
     }

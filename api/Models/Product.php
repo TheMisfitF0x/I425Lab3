@@ -90,15 +90,15 @@ class Product extends Model
         // Retrieve parameters from request body
         $params = $request->getParsedBody();
 
-        // Create a new User instance
+        // Create a new Product instance
         $product = new Product();
 
-        // Set the user's attributes
+        // Set the product's attributes
         foreach ($params as $field => $value) {
             $product->$field = $value;
         }
 
-        // Insert the user into the database
+        // Insert the product into the database
         $product->save();
         return $product;
     }
@@ -108,7 +108,7 @@ class Product extends Model
         // Retrieve parameters from request body
         $params = $request->getParsedBody();
 
-        //Retrieve the user's id from url and then the user from the database
+        //Retrieve the product's id from url and then the user from the database
         $id = $request->getAttribute('id');
         $product = self::findOrFail($id);
 
@@ -116,7 +116,7 @@ class Product extends Model
             $product->$field = $value;
         }
 
-        // Update the professor
+        // Update the product
         $product->save();
         return $product;
     }

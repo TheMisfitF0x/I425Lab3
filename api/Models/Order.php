@@ -91,15 +91,15 @@ class Order extends Model
         // Retrieve parameters from request body
         $params = $request->getParsedBody();
 
-        // Create a new user instance
+        // Create a new order instance
         $order = new Order();
 
-        // Set the user's attributes
+        // Set the order's attributes
         foreach ($params as $field => $value) {
             $order->$field = $value;
         }
 
-        // Insert the user into the database
+        // Insert the order into the database
         $order->save();
         return $order;
     }
@@ -109,7 +109,7 @@ class Order extends Model
         // Retrieve parameters from request body
         $params = $request->getParsedBody();
 
-        //Retrieve the user's id from url and then the user from the database
+        //Retrieve the order's id from url and then the user from the database
         $id = $request->getAttribute('id');
         $order = self::findOrFail($id);
 
@@ -117,7 +117,7 @@ class Order extends Model
             $order->$field = $value;
         }
 
-        // Update the professor
+        // Update the order
         $order->save();
         return $order;
     }

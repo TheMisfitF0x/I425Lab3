@@ -40,7 +40,7 @@ class Warehouse extends Model
 
     public static function getProductsByWarehouse($id)
     {
-        $products = self::findOrFail($id)->orders;
+        $products = self::findOrFail($id)->products;
         return $products;
     }
 

@@ -66,8 +66,8 @@ $app->group('', function () {
         $this->delete('/{id}', 'ProductController:delete');
     });
 //->add(new MyAuthenticator());
-})->add(new BasicAuthenticator());
+//})->add(new BasicAuthenticator());
 //})->add(new BearerAuthenticator());
-//})->add(new JWTAuthenticator());
-//$app->add(new ChatterLogging());
+})->add(new JWTAuthenticator());
+//});
 $app->run();

@@ -12,12 +12,12 @@ class Warehouse extends Model
 
     //one to many relationship
     public function orders(){
-        return $this->hasMany(Order::class, 'Warehouse_Id');
+        return $this->hasMany(Order::class, 'warehouse_id');
     }
 
     //one to many relationship
     public function products(){
-        return $this->hasMany(Product::class, 'Warehouse_Id');
+        return $this->hasMany(Product::class, 'warehouse_id');
     }
 
     public static function getWarehouses()

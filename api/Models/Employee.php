@@ -27,9 +27,9 @@ class Employee extends Model
             $payload_final = [];
             foreach ($employees as $employee) {
                 $payload_final[$employee->id] = [
-                    'Name' => $employee->Name,
-                    'Dob' => $employee->Dob,
-                    'Date_Hired' => $employee->Date_Hired
+                    'name' => $employee->name,
+                    'dob' => $employee->dob,
+                    'date_hired' => $employee->date_hired
                 ];
             }
         }else {
@@ -51,9 +51,9 @@ class Employee extends Model
             $payload = [];
             foreach ($employees as $employee) {
                 $payload[$employee->id] = [
-                    'Name' => $employee->Name,
-                    'Dob' => $employee->Dob,
-                    'Date_Hired' => $employee->Date_Hired
+                    'name' => $employee->name,
+                    'dob' => $employee->dob,
+                    'date_hired' => $employee->date_hired
                 ];
             }
 
@@ -111,8 +111,8 @@ class Employee extends Model
         if (is_numeric($terms)) {
             $query = self::where('id', "like", "%$terms%");
         } else {
-            $query = self::where('Name', 'like', "%$terms%")
-                ->orWhere('Date_Hired', 'like', "%$terms%");
+            $query = self::where('name', 'like', "%$terms%")
+                ->orWhere('date_hired', 'like', "%$terms%");
         }
         $results = $query->get();
         return $results;

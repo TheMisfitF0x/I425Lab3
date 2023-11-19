@@ -11,7 +11,7 @@ class Product extends Model
 
     public function warehouse()
     {
-        return $this->belongsTo(Warehouse::class,"Warehouse_Id");
+        return $this->belongsTo(Warehouse::class,"warehouse_id");
     }
 
     public static function getProducts($request){
@@ -31,12 +31,12 @@ class Product extends Model
             $payload_final = [];
             foreach ($products as $_product) {
                 $payload_final[$_product->id] = [
-                    'Product_Id' => $_product->id,
-                    'Warehouse_Id' => $_product->Warehouse_Id,
-                    'Product_Name' => $_product->Product_Name,
-                    'Product_Desc' => $_product->Product_Desc,
-                    'Product_Weight' => $_product->Product_Weight,
-                    'Product_Count' => $_product->Product_Count
+                    'product_id' => $_product->id,
+                    'warehouse_id' => $_product->warehouse_id,
+                    'product_name' => $_product->product_name,
+                    'product_desc' => $_product->product_desc,
+                    'product_weight' => $_product->product_weight,
+                    'product_counts' => $_product->product_counts
                 ];
             }
         }else {
@@ -58,12 +58,12 @@ class Product extends Model
             $payload = [];
             foreach ($products as $_product) {
                 $payload[$_product->id] = [
-                    'Product_Id' => $_product->id,
-                    'Warehouse_Id' => $_product->Warehouse_Id,
-                    'Product_Name' => $_product->Product_Name,
-                    'Product_Desc' => $_product->Product_Desc,
-                    'Product_Weight' => $_product->Product_Weight,
-                    'Product_Count' => $_product->Product_Count
+                    'product_id' => $_product->id,
+                    'warehouse_id' => $_product->warehouse_id,
+                    'product_name' => $_product->product_name,
+                    'product_desc' => $_product->product_desc,
+                    'product_weight' => $_product->product_weight,
+                    'product_counts' => $_product->product_counts
                 ];
             }
 
@@ -133,8 +133,8 @@ class Product extends Model
         if (is_numeric($terms)) {
             $query = self::where('id', "like", "%$terms%");
         } else {
-            $query = self::where('Product_Name', 'like', "%$terms%")
-                ->orWhere('Product_Desc', 'like', "%$terms%");
+            $query = self::where('product_name', 'like', "%$terms%")
+                ->orWhere('product_desc', 'like', "%$terms%");
         }
         $results = $query->get();
         return $results;

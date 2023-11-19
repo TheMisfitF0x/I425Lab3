@@ -5,6 +5,7 @@ namespace Warehouse\Models;
 use \Illuminate\Database\Eloquent\Model;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+
 class User extends Model
 {
     // The table associated with this model
@@ -32,10 +33,10 @@ class User extends Model
             $payload_final = [];
             foreach ($users as $_user) {
                 $payload_final[$_user->id] = [
-                    'Username'=>$_user->Username,
-                    'User_Id'=>$_user->id,
-                    'Dob'=>$_user->Dob,
-                    'Date_Created'=>$_user->Date_Created
+                    'username'=>$_user->username,
+                    'user_id'=>$_user->id,
+                    'dob'=>$_user->dob,
+                    'date_created'=>$_user->date_created
                 ];
             }
         }else {
@@ -57,10 +58,10 @@ class User extends Model
             $payload = [];
             foreach ($users as $_user) {
                 $payload[$_user->id] = [
-                    'Username' => $_user->Username,
-                    'User_Id' => $_user->id,
-                    'Dob' => $_user->Dob,
-                    'Date_Created' => $_user->Date_Created
+                    'username' => $_user->username,
+                    'user_id' => $_user->id,
+                    'dob' => $_user->dob,
+                    'date_created' => $_user->date_created
                 ];
             }
 
@@ -94,7 +95,7 @@ class User extends Model
         foreach ($params as $field => $value) {
 
             // Need to hash password
-            if ($field == 'Pass') {
+            if ($field == 'password') {
                 $value = password_hash($value, PASSWORD_DEFAULT);
             }
 
@@ -116,9 +117,9 @@ class User extends Model
         $user = self::findOrFail($id);
 
         // Update attributes of the professor
-        $user->Username = $params['Username'];
-        $user->Pass = password_hash($params['Pass'], PASSWORD_DEFAULT);
-        $user->Dob = $params['Dob'];
+        $user->username = $params['username'];
+        $user->password = password_hash($params['password'], PASSWORD_DEFAULT);
+        $user->dob = $params['dob'];
 
         // Update the professor
         $user->save();
@@ -136,8 +137,8 @@ class User extends Model
         if (is_numeric($terms)) {
             $query = self::where('id', "like", "%$terms%");
         } else {
-            $query = self::where('Username', 'like', "%$terms%")
-                ->orWhere('Date_Created', 'like', "%$terms%");
+            $query = self::where('username', 'like', "%$terms%")
+                ->orWhere('date_created', 'like', "%$terms%");
         }
         $results = $query->get();
         return $results;
@@ -187,11 +188,11 @@ class User extends Model
     // Authenticate a user by username and password. Return the user.
     public static function authenticateUser($username, $password)
     {
-        $user = self::where('Username', $username)->first();
+        $user = self::where('username', $username)->first();
         if (!$user) {
             return false;
         }
-        return password_verify($password, $user->Pass) ? $user : false;
+        return password_verify($password, $user->password) ? $user : false;
     }
 
     public static function generateJWT($id)
@@ -210,7 +211,7 @@ class User extends Model
             'iat' => time(),
             'data' => [
                 'uid' => $id,
-                'name' => $user->Username,
+                'name' => $user->username,
                 'email' => $user->email,
             ]];
         // Generate and return a token

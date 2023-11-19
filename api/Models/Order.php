@@ -12,7 +12,7 @@ class Order extends Model
 
     public function warehouse()
     {
-        return $this->belongsTo(Warehouse::class,"Warehouse_Id");
+        return $this->belongsTo(Warehouse::class,"warehouse_id");
     }
 
     public static function getOrders($request){
@@ -32,12 +32,12 @@ class Order extends Model
             $payload_final = [];
             foreach ($orders as $_order) {
                 $payload_final[$_order->id] = [
-                    'Order_Id'=>$_order->id,
-                    'Warehouse_Id'=>$_order->Warehouse_Id,
-                    'Cost'=>$_order->Cost,
-                    'User_id'=>$_order->User_id,
-                    'Product_Id'=>$_order->Product_Id,
-                    'Date_Created'=>$_order->Date_Created
+                    'order_id'=>$_order->id,
+                    'warehouse_id'=>$_order->warehouse_id,
+                    'cost'=>$_order->cost,
+                    'user_id'=>$_order->user_id,
+                    'product_id'=>$_order->product_id,
+                    'date_created'=>$_order->date_created
                 ];
             }
         }else {
@@ -59,12 +59,12 @@ class Order extends Model
             $payload = [];
             foreach ($orders as $_order) {
                 $payload[$_order->id] = [
-                    'Order_Id'=>$_order->id,
-                    'Warehouse_Id'=>$_order->Warehouse_Id,
-                    'Cost'=>$_order->Cost,
-                    'User_id'=>$_order->User_id,
-                    'Product_Id'=>$_order->Product_Id,
-                    'Date_Created'=>$_order->Date_Created
+                    'order_id'=>$_order->id,
+                    'warehouse_id'=>$_order->warehouse_id,
+                    'cost'=>$_order->cost,
+                    'user_id'=>$_order->user_id,
+                    'product_id'=>$_order->product_id,
+                    'date_created'=>$_order->date_created
                 ];
             }
 
@@ -91,7 +91,7 @@ class Order extends Model
         // Retrieve parameters from request body
         $params = $request->getParsedBody();
 
-        // Create a new User instance
+        // Create a new user instance
         $order = new Order();
 
         // Set the user's attributes
@@ -133,9 +133,9 @@ class Order extends Model
     {
         if (is_numeric($terms)) {
             $query = self::where('id', "like", "%$terms%")
-                ->orWhere('Cost', 'like', "%$terms%");
+                ->orWhere('cost', 'like', "%$terms%");
         } else {
-            $query = self::where('Date_Created', 'like', "%$terms%");
+            $query = self::where('date_created', 'like', "%$terms%");
         }
         $results = $query->get();
         return $results;

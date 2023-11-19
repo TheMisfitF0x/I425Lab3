@@ -1,7 +1,7 @@
 <?php
 
-//use Warehouse\Authentication\MyAuthenticator;
-use Warehouse\Authentication\BasicAuthenticator;
+use Warehouse\Authentication\MyAuthenticator;
+//use Warehouse\Authentication\BasicAuthenticator;
 //use Warehouse\Authentication\BearerAuthenticator;
 //use Warehouse\Authentication\JWTAuthenticator;
 
@@ -65,8 +65,8 @@ $app->group('', function () {
         $this->patch('/{id}', 'ProductController:update');//Postman PATCH Boyd with x-www-form-urlencoded to send new information.
         $this->delete('/{id}', 'ProductController:delete');
     });
-    //})->add(new MyAuthenticator());
-    })->add(new BasicAuthenticator());
+})->add(new MyAuthenticator());
+    //})->add(new BasicAuthenticator());
 
 //})->add(new BearerAuthenticator());
 // })->add(new MyAuthenticator());

@@ -3,8 +3,8 @@
     width: 500px;
     padding: 5px;
     margin: auto;
-    border: #c53131 2px solid;
-    background-color: #000000;
+    border: none;
+    background-color: #fff;
 }
 .form-signin .checkbox, .form-sigup .checkbox {
     font-weight: 400;

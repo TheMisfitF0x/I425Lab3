@@ -11,7 +11,7 @@
 <!--   Begin footer -------------->
 <footer class="footer mt-auto py-3">
     <div class="container">
-        <span class="text-muted">&copy;MyChatter Co. 2018-2019</span>
+        <span class="text-white">&copy;Oddity Warehouse Co. 2023</span>
     </div>
 </footer>
 <!--<div id="loading" class="loading">

@@ -1,5 +1,5 @@
 var oldHash = '';
-var baseUrl_API = "http://localhost:80/projects/WarehouseAPI/api"; // you need to fill this variable with your own api url
+var baseUrl_API = "http://localhost:80/I425/I425Lab3/api"; // you need to fill this variable with your own api url
 
 $(function () {
     //Handle hashchange event; when a click is clicked, invoke an appropriate function
@@ -55,16 +55,16 @@ $(function () {
 // This function sets the content of the homepage.
 function home() {
     let _html =
-        `<p>This application allows employees and clientele of ACME inc. to access and update the information of products and outgoing orders within our database. 
-        ACME personnel also have access to users, warehouses, and employee information.</p>
+        `<p>This application allows employees and clientele of Oddity Warehouse. to access and update the information of products and outgoing orders within our database. 
+        Oddity Warehouse personnel also have access to users, warehouses, and employee information.</p>
         
-        <p>No access will be provided prior to sign-in. Sign-up is available for those lacking an ACME inc. account. 
-        If you are an employee of ACME inc. and do not have permissions to access data you believe you should be able to, please contact your ACME inc. supervisor</p>
+        <p>No access will be provided prior to sign-in. Sign-up is available for those lacking an Oddity Warehouse account. 
+        If you are an employee of Oddity Warehouse and do not have permissions to access data you believe you should be able to, please contact your Oddity Warehouse supervisor.</p>
         
         <p>Please click on the "Sign in" link to sign in and explore the site. If you don't already have an account, please sign up and create a new account.</p>`;
 
     // Update the section heading, sub heading, and content
-    updateMain('Home', 'Welcome to MyChatter Application', _html);
+    updateMain('Home', 'Welcome to Oddity Warehouse', _html);
 }
 
 // This function updates main section content.

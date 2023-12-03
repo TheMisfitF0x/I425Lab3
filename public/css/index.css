@@ -16,7 +16,7 @@ body {
 
 /* Not required for template or sticky footer method. */
 .footer {
-    background-color: #d31313;
+    background-color: #007bff;
 }
 
 .footer > .container {

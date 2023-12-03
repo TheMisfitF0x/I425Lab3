@@ -30,7 +30,7 @@
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="#home" style="color:#000000; font-weight: bold"><img src="img/ACME-Logo-CMYK-pdf.jpg" style="width:40px;">&nbsp Warehouse Manager</a>
+            <a class="navbar-brand" href="#home" style="color:#FFFFFF; font-weight: bold"><img src="img/oddity_warehouse_logo.svg" style="width:40px;">&nbsp Oddity Warehouse</a>
 
 
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse"

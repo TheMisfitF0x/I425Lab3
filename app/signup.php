@@ -9,7 +9,7 @@
 <!--------- signup form ----------------------------------------------------------->
 <form class="form-signup" style="display: none">
     <!--<input type="hidden" name="form-name" value="signup">-->
-    <h1 class="h3 mb-3 font-weight-normal" style="padding: 20px; color: #FFFFFF; background-color: #316AC5">Create an account at MyChatter</h1>
+    <h1 class="h3 mb-3 font-weight-normal" style="padding: 20px; color: #FFFFFF; background-color: #fc1717">Create an account at MyChatter</h1>
     <div style="width: 250px; margin: auto">
 <!--        <label for="name" class="sr-only">Name</label>-->
 <!--        <input type="text" id="signup-name" class="form-control" placeholder="Name" required autofocus>-->

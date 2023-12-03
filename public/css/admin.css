@@ -37,7 +37,7 @@ div[class^="list-"] {
 button.btn-light {
     margin: 0px 2px;
     width: 75px;
-    border: #4D90C6 solid 1px;
+    border: #cc5500 solid 1px;
 }
 
 /* styles for the update button */
@@ -58,7 +58,7 @@ button.btn-cancel{
 
 /* styles for the add form  */
 .post-add-button-row {
-    background-color: #123E81;
+    background-color: #cc5500 ;
     color: #FFFFFF;
 }
 

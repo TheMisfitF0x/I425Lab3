@@ -16,8 +16,8 @@
     <!-- css for the signin page -->
     <link rel="stylesheet" href="css/index.css" >
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/user.css">
-    <link rel="stylesheet" href="css/post_preview.css">
+    <link rel="stylesheet" href="css/warehouse.css">
+    <link rel="stylesheet" href="css/order_preview.css">
     <link rel="stylesheet" href="css/post.css">
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/signin.css">

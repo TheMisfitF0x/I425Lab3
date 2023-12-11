@@ -1,0 +1,33 @@
+/*
+*  styles for class-related elements
+ */
+
+.order_preview {
+    font-size: 0.9em;
+}
+.order_preview th {
+    background-color: #eeeeee;
+}
+.order_preview td, .order_preview th {
+    padding: 5px 2px;
+}
+
+.order_preview-orderid {
+    min-width: 100px
+}
+
+.order_preview-productid {
+    min-width: 100px
+}
+
+.order_preview-productcost {
+    min-width: 50px
+}
+
+.order_preview-userid {
+    min-width: 100px
+}
+
+.order_preview-date {
+    min-width: 100px
+}

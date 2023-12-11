@@ -1,16 +1,20 @@
 /*
 *  styles for professor-related elements
  */
+.warehouse-id {
+    min-width: 100px
+}
+
 .warehouse-location {
     min-width: 200px
 }
 
 .warehouse-leasenum {
-    min-width: 120px
+    min-width: 150px
 }
 
 .warehouse-sqft {
-    min-width: 120px
+    min-width: 150px
 }
 
 .warehouse-monthlycost {

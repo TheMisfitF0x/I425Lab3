@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/warehouse.css">
     <link rel="stylesheet" href="css/order_preview.css">
-    <link rel="stylesheet" href="css/post.css">
+    <link rel="stylesheet" href="css/product.css">
     <link rel="stylesheet" href="css/admin.css">
     <link rel="stylesheet" href="css/signin.css">
     <title>Warehouse SPA</title>

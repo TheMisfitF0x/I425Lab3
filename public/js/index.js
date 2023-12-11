@@ -24,8 +24,14 @@ $(function () {
             case 'user':
                 showUsers();
                 break;
-            case 'post':
-                showPosts();
+            case 'warehouse':
+                showWarehouses();
+                break;
+            case 'product':
+                showProducts();
+                break;
+            case 'orders':
+                showOrders();
                 break;
             case 'admin':
                 showAllPosts();

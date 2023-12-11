@@ -29,12 +29,11 @@
 <script src="js/lib/axios.min.js"></script>
 
 
-<script src="js/user.js"></script>
-<script src="js/post.js"></script>
 <script src="js/admin.js"></script>
 <script src="js/signin.js"></script>
 <script src="js/signup.js"></script>
 <script src="js/signout.js"></script>
+<script src="js/warehouse.js"></script>
 <script src="js/message.js"></script>
 <script src="js/index.js"></script>
 </body>

@@ -48,6 +48,9 @@
                     <li class="nav-item" id="li-order">
                         <a class="nav-link disabled" href="#order">Orders</a>
                     </li>
+                    <li class="nav-item" id="li-admin">
+                        <a class="nav-link disabled" href="#admin">Admin</a>
+                    </li>
                     <li class="nav-item" id="li-signin">
                         <a class="nav-link" href="#signin">Sign in</a>
                     </li>

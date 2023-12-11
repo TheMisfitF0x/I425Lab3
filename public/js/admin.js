@@ -1,60 +1,77 @@
 /***********************************************************************************************************
- ******                            Show All Messages for Admin                                        ******
+ ******                            Show All Products for Admin                                        ******
  **********************************************************************************************************/
 
-//This function gets called when the Admin link in the nav bar is clicked. It shows all the records of messages
-function showAllPosts() {
-	console.log('Show all messages for admin.');
+//This function gets called when the Admin link in the nav bar is clicked. It shows all the records of products
+function showAllProducts() {
+    console.log('Show all products for admin.');
+    //if the selection list exists, retrieve the selected option value; otherwise, set a default value.
+    let limit = ($("#product-limit-select").length) ? $('#product-limit-select option:checked').val() : 5;
+    let sort = ($("#product-sort-select").length) ? $('#product-sort-select option:checked').val() : "id:asc";
+    //construct the request url
+    const url = baseUrl_API + '/products?limit=' + limit + "&offset=" + offset + "&sort=" + sort;
+    fetch(url, {
+        method: 'GET',
+        headers: {"Authorization": "Bearer " + jwt}
+    })
+        .then(checkFetch)
+        .then(response => response.json())
+        .then(products => displayAllProducts(products.data))
+        .catch(err => showMessage("Errors", err)) //display errors
 }
 
 
 //Callback function that shows all the messages. The parameter is an array of messages.
 // The first parameter is an array of messages and second parameter is the subheading, defaults to null.
-function displayAllPosts(posts, subheading=null) {
+function displayAllProducts(products, subheading=null) {
     console.log("display all message for the editing purpose")
 
     // search box and the row of headings
     let _html = `<div style='text-align: right; margin-bottom: 3px'>
             <input id='search-term' placeholder='Enter search terms'> 
-            <button id='btn-post-search' onclick='searchPosts()'>Search</button></div>
+            <button id='btn-product-search' onclick='searchProducts()'>Search</button></div>
             <div class='content-row content-row-header'>
-            <div class='post-id'>Message ID</div>
-            <div class='post-body'>Body</div>
-            <div class='post-image'>Image</div>
-            <div class='post-create'>Create Time</div>
-            <div class='post-update'>Update Time</div>
+            <div class='product-id'>Product ID</></div>
+            <div class='product-name'>Product Name</></div>
+            <div class='product-desc'>Description</div>
+            <div class='product-weight'>Weight</div>
+            <div class='product-count'>Count</div>
+            <div class='product-warehouse-id'>Warehouse ID</div>
             </div>`;  //end the row
 
     // content rows
-    for (let x in posts) {
-        let post = posts[x];
+    for (let x in products) {
+        let product = products[x];
         _html += `<div class='content-row'>
-            <div class='post-id'>${post.id}</div>
-            <div class='post-body' id='post-edit-body-${post.id}'>${post.body}</div> 
-            <div class='post-image' id='post-edit-image_url-${post.id}'>${post.image_url}</div>
-            <div class='post-create' id='post-edit-created_at-${post.id}'>${post.created_at}</div> 
-            <div class='post-update' id='post-edit-updated_at-${post.id}'>${post.updated_at}</div>`;
+            <div class='product-id'>${product.id}</div>
+            <div class='product-name' id='product-edit-name-${product.id}'>${product.product_name}</div> 
+            <div class='product-desc' id='post-edit-desc-${product.id}'>${product.product_desc}</div>
+            <div class='product-weight' id='post-edit-weight-${product.id}'>${product.product_weight}</div> 
+            <div class='product-count' id='product-edit-count-${product.id}'>${post.product_count}</div>
+            <div class='product-warehouse-id' id='product-edit-warehouse_id-${product.id}'>${post.warehouse_id}</div>`;
 
-            _html += `<div class='list-edit'><button id='btn-post-edit-${post.id}' onclick=editPost('${post.id}') class='btn-light'> Edit </button></div>
-            <div class='list-update'><button id='btn-post-update-${post.id}' onclick=updatePost('${post.id}') class='btn-light btn-update' style='display:none'> Update </button></div>
-            <div class='list-delete'><button id='btn-post-delete-${post.id}' onclick=deletePost('${post.id}') class='btn-light'>Delete</button></div>
-            <div class='list-cancel'><button id='btn-post-cancel-${post.id}' onclick=cancelUpdatePost('${post.id}') class='btn-light btn-cancel' style='display:none'>Cancel</button></div>`
+        _html += `<div class='list-edit'><button id='btn-product-edit-${product.id}' onclick=editProduct('${product.id}') class='btn-light'> Edit </button></div>
+            <div class='list-update'><button id='btn-product-update-${product.id}' onclick=updateProduct('${product.id}') class='btn-light btn-update' style='display:none'> Update </button></div>
+            <div class='list-delete'><button id='btn-product-delete-${product.id}' onclick=deleteProduct('${product.id}') class='btn-light'>Delete</button></div>
+            <div class='list-cancel'><button id='btn-product-cancel-${product.id}' onclick=cancelUpdateProduct('${product.id}') class='btn-light btn-cancel' style='display:none'>Cancel</button></div>`
 
         _html += '</div>';  //end the row
     }
 
     //the row of element for adding a new message
 
-        _html += `<div class='content-row' id='post-add-row' style='display: none'> 
-            <div class='post-id post-editable' id='post-new-user_id' contenteditable='true' content="User ID"></div>
-            <div class='post-body post-editable' id='post-new-body' contenteditable='true'></div>
+    _html += `<div class='content-row' id='product-add-row' style='display: none'> 
+            <div class='product-id product-editable' id='product-new-product_id' contenteditable='true' content="Product ID"></div>
+            <div class='product-name product-editable' id='product-new-product_name' contenteditable='true'></div>
+            
+            
             <div class='post-image post-editable' id='post-new-image_url' contenteditable='true'></div>
             <div class='list-update'><button id='btn-add-post-insert' onclick='addPost()' class='btn-light btn-update'> Insert </button></div>
             <div class='list-cancel'><button id='btn-add-post-cancel' onclick='cancelAddPost()' class='btn-light btn-cancel'>Cancel</button></div>
             </div>`;  //end the row
 
-        // add new message button
-        _html += `<div class='content-row post-add-button-row'><div class='post-add-button' onclick='showAddRow()'>+ ADD A NEW MESSAGE</div></div>`;
+    // add new message button
+    _html += `<div class='content-row post-add-button-row'><div class='post-add-button' onclick='showAddRow()'>+ ADD A NEW MESSAGE</div></div>`;
 
     //Finally, update the page
     subheading = (subheading == null) ? 'All Messages' : subheading;
@@ -65,7 +82,28 @@ function displayAllPosts(posts, subheading=null) {
  ******                            Search Messages                                                    ******
  **********************************************************************************************************/
 function searchPosts() {
-   console.log('searching for messages');
+    console.log('searching for messages');
+    let term = $("#search-term").val();
+//console.log(term);
+    const url = baseUrl_API + "/messages?q=" + term;
+    let subheading = '';
+//console.log(url);
+    if (term == '') {
+        subheading = "All Messages";
+    } else if (isNaN(term)) {
+        subheading = "Messages Containing '" + term + "'"
+    } else {
+        subheading = "Messages whose ID is having" + term;
+    }
+//send the request
+    fetch(url, {
+        method: 'GET',
+        headers: {"Authorization": "Bearer " + jwt}
+    })
+        .then(checkFetch)
+        .then(response => response.json())
+        .then(posts => displayAllPosts(posts))
+        .catch(err => showMessage("Errors", err)) //display errors
 }
 
 
@@ -95,7 +133,26 @@ function editPost(id) {
 
 //This function gets called when the user clicks on the Update button to update a message record
 function updatePost(id) {
-	console.log('update the message whose id is ' + id);
+    console.log('update the message whose id is ' + id);
+    let data = {};
+    data['body'] = $("div#post-edit-body-" + id).html();
+    data['image_url'] = $("div#post-edit-image_url-" + id).html();
+    data['created_at'] = $("div#post-edit-created_at-" + id).html();
+    data['updated_at'] = $("div#post-edit-updated_at-" + id).html();
+    console.log(data);
+    const url = baseUrl_API + "/messages/" + id;
+    console.log(url);
+    fetch(url, {
+        method: 'PATCH',
+        headers: {
+            "Authorization": "Bearer " + jwt,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+        .then(checkFetch)
+        .then(() => resetPost())
+        .catch(error => showMessage("Errors", error))
 }
 
 
@@ -123,7 +180,15 @@ function deletePost(id) {
 
 // Callback function that removes a message from the system. It gets called by the deletePost function.
 function removePost(id) {
-	console.log('remove the message whose id is ' + id);
+    console.log('remove the message whose id is ' + id);
+    let url = baseUrl_API + "/messages/" + id;
+    fetch(url, {
+        method: 'DElETE',
+        headers: {"Authorization": "Bearer " + jwt,},
+    })
+        .then(checkFetch)
+        .then(() => showAllPosts())
+        .catch(error => showMessage("Errors", error))
 }
 
 
@@ -139,7 +204,30 @@ function showAddRow() {
 
 //This function inserts a new message. It gets called when a user clicks on the Insert button.
 function addPost() {
-	console.log('Add a new message');
+    console.log('Add a new message');
+    let data = {};
+    $("div[id^='post-new-']").each(function () {
+        let field = $(this).attr('id').substr(9);
+        let value = $(this).html();
+        data[field] = value;
+    });
+// data['user_id'] = $("div#post-new-user_id").html();
+// data['body'] = $("div#post-new-body").html();
+// data['image_url'] = $("div#post-new-image_url").html();
+    console.log(data);
+    const url = baseUrl_API + "/messages";
+    console.log(url);
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            "Authorization": "Bearer " + jwt,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+        .then(checkFetch)
+        .then(() => showAllPosts())
+        .catch(err => showMessage("Errors", err))
 }
 
 

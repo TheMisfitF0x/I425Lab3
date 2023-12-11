@@ -36,7 +36,8 @@ class Product extends Model
                     'product_name' => $_product->product_name,
                     'product_desc' => $_product->product_desc,
                     'product_weight' => $_product->product_weight,
-                    'product_count' => $_product->product_count
+                    'product_count' => $_product->product_count,
+                    'product_cost' => $_product->product_cost
                 ];
             }
         }else {
@@ -63,7 +64,8 @@ class Product extends Model
                     'product_name' => $_product->product_name,
                     'product_desc' => $_product->product_desc,
                     'product_weight' => $_product->product_weight,
-                    'product_count' => $_product->product_count
+                    'product_count' => $_product->product_count,
+                    'product_cost' => $_product->product_cost
                 ];
             }
 

@@ -73,7 +73,7 @@ class Product extends Model
                 'offset' => $offset,
                 'links' => $links,
                 'sort' => $sort_key_array,
-                'data' => $payload
+                'data' => $products
             ];
             return $payload_final;
         }

@@ -1,4 +1,4 @@
-//This function shows all users. It gets called when a user clicks on the Users link in the nav bar.
+//This function shows all warehouses. It gets called when a user clicks on the Warehouses link in the nav bar.
 function showWarehouses() {
     console.log('show all the warehouses');
     const url = baseUrl_API + '/warehouses';
@@ -15,7 +15,7 @@ function showWarehouses() {
 }
 
 
-//Callback function: display all users; The parameter is an array of user objects.
+//Callback function: display all warehouses; The parameter is an array of warehouse objects.
 function displayWarehouses(warehouses) {
     let _html;
     _html = `<div class='content-row content-row-header'>

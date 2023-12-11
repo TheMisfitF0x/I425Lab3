@@ -22,21 +22,21 @@ function displayWarehouses(warehouses) {
         <div class='warehouse-location'>Location</div>
         <div class='warehouse-leasenum'>Lease Number</div>
         <div class='warehouse-sqft'>Square Footage</div>
-        <div class='warehouse'>Monthly Cost</div>
+        <div class='warehouse-monthlycost'>Monthly Cost</div>
         </div>`;
     for (let x in warehouses) {
         let warehouse = warehouses[x];
         let cssClass = (x % 2 == 0) ? 'content-row' : 'content-row content-row-odd';
         _html += `<div id='content-row-${warehouse.id}' class='${cssClass}'>
             <div class='warehouse-location'>
-                <span class='list-key' data-user='${warehouse.id}' 
+                <span class='list-key' data-warehouse='${warehouse.id}' 
                      onclick=showUserPostsPreview('${warehouse.id}') 
-                     title='Get messages made by the user'>${warehouse.name}
+                     title='Get orders made for the warehouse'>${warehouse.location}
                 </span>
             </div>
-            <div class='user-email'>${user.email}</div>
-            <div class='user-profileicon'>${user.profile_icon}</div>
-            <div class='user-username'>${user.username}</div>            
+            <div class='warehouse-leasenum'>${warehouse.lease_num}</div>
+            <div class='warehouse-sqft'>${warehouse.sqft}</div>
+            <div class='warehouse-monthlycost'>${warehouse.monthly_cost}</div>            
             </div>`;
     }
     //Finally, update the page

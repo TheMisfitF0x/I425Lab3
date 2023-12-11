@@ -1,19 +1,19 @@
 /*
 *  styles for professor-related elements
  */
-.user-name {
+.warehouse-location {
     min-width: 200px
 }
 
-.user-email {
-    min-width: 150px
-}
-
-.user-profileicon {
+.warehouse-leasenum {
     min-width: 120px
 }
 
-.user-username {
+.warehouse-sqft {
+    min-width: 120px
+}
+
+.warehouse-monthlycost {
     min-width: 100px
 }
 

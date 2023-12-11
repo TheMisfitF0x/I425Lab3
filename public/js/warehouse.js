@@ -40,5 +40,5 @@ function displayWarehouses(warehouses) {
             </div>`;
     }
     //Finally, update the page
-    updateMain('Users', 'All Users', _html);
+    updateMain('Warehouses', 'All Warehouses', _html);
 }

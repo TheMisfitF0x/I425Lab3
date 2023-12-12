@@ -34,7 +34,7 @@ $(function () {
                 showOrders();
                 break;
             case 'admin':
-                showAllPosts();
+                showAllProducts();
                 break;
             case 'signin':
                 signin();

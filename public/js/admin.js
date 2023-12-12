@@ -37,6 +37,7 @@ function displayAllProducts(products, subheading=null) {
             <div class='product-desc'>Description</div>
             <div class='product-weight'>Weight</div>
             <div class='product-count'>Count</div>
+            <div class='product-count'>Cost</div>
             <div class='product-warehouse-id'>Warehouse ID</div>
             </div>`;  //end the row
 
@@ -49,6 +50,7 @@ function displayAllProducts(products, subheading=null) {
             <div class='product-desc' id='product-edit-desc-${product.id}'>${product.product_desc}</div>
             <div class='product-weight' id='product-edit-weight-${product.id}'>${product.product_weight}</div> 
             <div class='product-count' id='product-edit-count-${product.id}'>${product.product_count}</div>
+            <div class='product-cost' id='product-edit-cost-${product.id}'>${product.product_cost}</div>
             <div class='product-warehouse-id' id='product-edit-warehouse_id-${product.id}'>${product.warehouse_id}</div>`;
 
         _html += `<div class='list-edit'><button id='btn-product-edit-${product.id}' onclick=editProduct('${product.id}') class='btn-light'> Edit </button></div>
@@ -67,6 +69,7 @@ function displayAllProducts(products, subheading=null) {
             <div class='product-desc product-editable' id='product-new-product_desc' contenteditable='true'></div>
             <div class='product-weight product-editable' id='product-new-product_weight' contenteditable='true'></div>
             <div class='product-count product-editable' id='product-new-product_count' contenteditable='true'></div>
+            <div class='product-cost product-editable' id='product-new-product_cost' contenteditable='true'></div>
             <div class='product-warehouse-id product-editable' id='product-new-warehouse_id' contenteditable='true'></div>
             <div class='list-update'><button id='btn-add-product-insert' onclick='addProduct()' class='btn-light btn-update'> Insert </button></div>
             <div class='list-cancel'><button id='btn-add-product-cancel' onclick='cancelAddProduct()' class='btn-light btn-cancel'>Cancel</button></div>
@@ -127,6 +130,7 @@ function editProduct(id) {
     $("div#product-edit-desc-" + id).attr('contenteditable', true).addClass('product-editable');
     $("div#product-edit-weight-" + id).attr('contenteditable', true).addClass('product-editable');
     $("div#product-edit-count-" + id).attr('contenteditable', true).addClass('product-editable');
+    $("div#product-edit-cost-" + id).attr('contenteditable', true).addClass('product-editable');
     $("div#product-edit-warehouse_id-" + id).attr('contenteditable', true).addClass('product-editable');
 
     $("button#btn-product-edit-" + id + ", button#btn-product-delete-" + id).hide();
@@ -138,11 +142,12 @@ function editProduct(id) {
 function updateProduct(id) {
     console.log('update the product whose id is ' + id);
     let data = {};
-    data['product_name'] = $("div#product-edit-name-" + id).val();
-    data['product_desc'] = $("div#product-edit-desc-" + id).val();
-    data['product_weight'] = $("div#product-edit-weight-" + id).val();
-    data['product_count'] = $("div#product-edit-count-" + id).val();
-    data['warehouse_id'] = $("div#product-edit-warehouse_id-" + id).val();
+    data['product_name'] = $("div#product-edit-name-" + id).html();
+    data['product_desc'] = $("div#product-edit-desc-" + id).html();
+    data['product_weight'] = $("div#product-edit-weight-" + id).html();
+    data['product_count'] = $("div#product-edit-count-" + id).html();
+    data['product_cost'] = $("div#product-edit-cost-" + id).html();
+    data['warehouse_id'] = $("div#product-edit-warehouse_id-" + id).html();
     console.log(data);
     const url = baseUrl_API + "/products/" + id;
     console.log(url);

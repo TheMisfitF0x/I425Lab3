@@ -4,7 +4,7 @@
 
 
 .product-id{
-    width: 130px
+    width: 100px
 }
 
 .product-name {
@@ -12,7 +12,7 @@
 }
 
 .product-desc {
-    width: 400px
+    width: 200px
 }
 
 .product-weight {
@@ -23,8 +23,12 @@
     width: 120px
 }
 
-.product-warehouse-id {
+.product-cost {
     width: 120px
+}
+
+.product-warehouse-id {
+    width: 100px
 }
 
 

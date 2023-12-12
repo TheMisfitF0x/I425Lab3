@@ -39,6 +39,7 @@ function displayProducts (response) {
         "<div class='product-desc'>Description</div>" +
         "<div class='product-weight'>Weight</div>" +
         "<div class='product-count'>Count</div>" +
+        "<div class='product-cost'>Cost</div>" +
         "<div class='product-warehouse-id'>Warehouse ID</div>" +
         "</div>";
     let products = response.data;
@@ -50,6 +51,7 @@ function displayProducts (response) {
             "<div class='product-desc'>" + product.product_desc + "</div>" +
             "<div class='product-weight'>" + product.product_weight + "</div>" +
             "<div class='product-count'>" + product.product_count + "</div>" +
+            "<div class='product-cost'>$" + product.product_cost + "</div>" +
             "<div class='product-warehouse-id'>" + product.warehouse_id + "</div>" +
             "</div>" +
             "<div class='container product-detail' id='product-detail-" + product.product_id + "' style='display: none'></div>";

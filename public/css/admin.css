@@ -51,22 +51,22 @@ button.btn-cancel{
 }
 
 /* styles for editable items */
-.post-editable {
+.product-editable {
     border: 1px solid #cccccc;
     min-height: 22px
 }
 
 /* styles for the add form  */
-.post-add-button-row {
+.product-add-button-row {
     background-color: #cc5500 ;
     color: #FFFFFF;
 }
 
-.post-add-button {
+.product-add-button {
     margin-left: 5px;
     cursor: pointer;
 }
 
-.post-add-button:hover {
+.product-add-button:hover {
     text-decoration: underline;
 }

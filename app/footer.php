@@ -35,6 +35,7 @@
 <script src="js/signout.js"></script>
 <script src="js/warehouse.js"></script>
 <script src="js/product.js"></script>
+<script src="js/order.js"></script>
 <script src="js/message.js"></script>
 <script src="js/index.js"></script>
 </body>

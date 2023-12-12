@@ -74,7 +74,7 @@ class Order extends Model
                 'offset' => $offset,
                 'links' => $links,
                 'sort' => $sort_key_array,
-                'data' => $payload
+                'data' => $orders
             ];
             return $payload_final;
         }

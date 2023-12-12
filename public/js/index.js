@@ -30,7 +30,7 @@ $(function () {
             case 'product':
                 showProducts();
                 break;
-            case 'orders':
+            case 'order':
                 showOrders();
                 break;
             case 'admin':

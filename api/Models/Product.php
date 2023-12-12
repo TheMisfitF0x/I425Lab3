@@ -40,6 +40,14 @@ class Product extends Model
                     'product_cost' => $_product->product_cost
                 ];
             }
+
+            $payload_final = [
+                'totalCount' => $count,
+                'limit' => $limit,
+                'offset' => $offset,
+                'data' => $products
+            ];
+            return $payload_final;
         }else {
             //Pagination
             $links = self::getLinks($request, $limit, $offset);

@@ -89,7 +89,7 @@ function searchProducts() {
 //console.log(term);
     const url = baseUrl_API + "/products?q=" + term;
     let subheading = '';
-//console.log(url);
+console.log(url);
     if (term == '') {
         subheading = "All Products";
     } else if (isNaN(term)) {
@@ -104,7 +104,7 @@ function searchProducts() {
     })
         .then(checkFetch)
         .then(response => response.json())
-        .then(products => displayAllProducts(products))
+        .then(products => displayAllProducts(products.data))
         .catch(err => showMessage("Errors", err)) //display errors
 }
 

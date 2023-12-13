@@ -1,5 +1,6 @@
 <?php
 
+use Warehouse\Middleware\Logging as WarehouseLogging;
 use Warehouse\Authentication\MyAuthenticator;
 use Warehouse\Authentication\BasicAuthenticator;
 use Warehouse\Authentication\BearerAuthenticator;
@@ -68,6 +69,7 @@ $app->group('', function () {
 //})->add(new MyAuthenticator());
 //})->add(new BasicAuthenticator());
 //})->add(new BearerAuthenticator());
-})->add(new JWTAuthenticator());
-//});
+//})->add(new JWTAuthenticator());
+});
+$app->add(new WarehouseLogging());
 $app->run();

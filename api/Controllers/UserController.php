@@ -4,6 +4,7 @@ use Warehouse\Models\Token;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Warehouse\Models\User;
+use Warehouse\Validations\Validator;
 
 class UserController
 {
@@ -21,6 +22,17 @@ class UserController
     }
 
     public function create(Request $request, Response $response, array $args){
+        // Validate the request
+        $validation = Validator::validateUser($request);
+        // If validation failed
+        if (!$validation) {
+            $results = [
+                'status' => "Validation failed",
+                'errors' => Validator::getErrors()
+            ];
+            return $response->withJson($results, 500, JSON_PRETTY_PRINT);
+        }
+
         $user = User::createUser($request);
         $results = [
             'status' => 'user created',
@@ -30,6 +42,17 @@ class UserController
     }
 
     public function update(Request $request, Response $response, array $args){
+        // Validate the request
+        $validation = Validator::validateUser($request);
+        // If validation failed
+        if (!$validation) {
+            $results = [
+                'status' => "Validation failed",
+                'errors' => Validator::getErrors()
+            ];
+            return $response->withJson($results, 500, JSON_PRETTY_PRINT);
+        }
+
         $user = User::updateUser($request);
         $results = [
             'status' => 'user updated',

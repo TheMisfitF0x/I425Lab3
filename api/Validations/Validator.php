@@ -24,6 +24,7 @@ try {
     {
         $rules = [
             'username' => v::noWhitespace()->notEmpty()->alnum(),
+            'dob' => v::date(),
             'password' => v::notEmpty(),
             'email' => v::email()
         ];

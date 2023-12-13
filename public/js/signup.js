@@ -13,8 +13,8 @@ $('form.form-signup').submit(function (e) {
     let username = $('#signup-username').val();
     let dob = $('#signup-dob').val();
 
-    let dobSplit = dob.split("-");
-    dob = dobSplit[1] + "/" + dobSplit[2] + "/" + dobSplit[0];
+    // let dobSplit = dob.split("-");
+    // dob = dobSplit[1] + "/" + dobSplit[2] + "/" + dobSplit[0];
 
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');

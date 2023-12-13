@@ -1,7 +1,7 @@
 /***********************************************************************************************************
- ******                            Show Products                                                         ******
+ ******                            Show Orders                                                         ******
  **********************************************************************************************************/
-//This function shows all products. It gets called when a user clicks on the Products link in the nav bar.
+//This function shows all orders. It gets called when a user clicks on the Orders link in the nav bar.
 
 // Pagination, sorting, and limiting are disabled
 function showOrders (offset = 0) {

@@ -51,7 +51,7 @@ function displayWarehouses(warehouses) {
 /* Display orders within a warehouse. It gets called when a user clicks on a warehouse's id in
  * the warehouse list. The parameter is the warehouse's id.
 */
-//Display posts made by a user in a modal
+//Display warehouses made by a user in a modal
 function showWarehouseOrdersPreview(id) {
     console.log('preview a warehouse\'s orders');
     const url = baseUrl_API + '/warehouses/' + id + '/orders';
@@ -73,10 +73,10 @@ function showWarehouseOrdersPreview(id) {
 
 
 
-// Callback function that displays all posts made by a user.
-// Parameters: user's name, an array of Post objects
+// Callback function that displays all warehouses made by a user.
+// Parameters: user's name, an array of Warehouse objects
 function displayWarehouseOrdersPreview(warehouse, orders) {
-    let _html = "<div class='post_preview'>No orders were found.</div>";
+    let _html = "<div class='warehouse_preview'>No orders were found.</div>";
     if (orders.length > 0) {
         _html = "<table class='order_preview'>" +
             "<tr>" +

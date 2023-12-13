@@ -43,7 +43,7 @@ function displayProducts (response) {
         "<div class='product-warehouse-id'>Warehouse ID</div>" +
         "</div>";
     let products = response.data;
-    products.forEach(function(product, x){
+    products.forEach(function (product, x) {
         let cssClass = (x % 2 == 0) ? 'content-row' : 'content-row content-row-odd';
         _html += "<div class='" + cssClass + "'>" +
             "<div class='product-id'>" + product.id + "</div>" +
@@ -72,54 +72,6 @@ function displayProducts (response) {
     updateMain('Products', 'All Products', _html);
 
 }
-
-
-// /***********************************************************************************************************
-//  ******                            Show Comments made for a message                                   ******
-//  **********************************************************************************************************/
-// /* Display all comments. It get called when a user clicks on a message's id number in
-//  * the message list. The parameter is the message id number.
-// */
-// function showComments(number) {
-//     console.log('get a message\'s all comments');
-//     let url = baseUrl_API + '/messages/' + number + '/comments';
-//     axios({
-//         method: 'get',
-//         url: url,
-//         cache: true,
-//         headers: {"Authorization": "Bearer " + jwt}
-//     })
-//         .then(function (response) {
-// //console.log(response.data);
-//             displayComments(number, response);
-//         })
-//         .catch(function (error) {
-//             handleAxiosError(error);
-//         });
-// }
-
-
-// // Callback function that displays all details of a course.
-// // Parameters: course number, a promise
-// function displayComments(number, response) {
-//     let _html = "<div class='content-row content-row-header'>Comments</div>";
-//     let comments = response.data;
-//     //console.log(number);
-//     //console.log(comments);
-//     comments.forEach(function(comment, x){
-//         _html +=
-//             "<div class='post-detail-row'><div class='post-detail-label'>Comment ID</div><div class='post-detail-field'>" + comment.id + "</div></div>" +
-//             "<div class='post-detail-row'><div class='post-detail-label'>Comment Body</div><div class='post-detail-field'>" + comment.body + "</div></div>" +
-//             "<div class='post-detail-row'><div class='post-detail-label'>Create Time</div><div class='post-detail-field'>" + comment.created_at + "</div></div>";
-//     });
-//
-//     $('#post-detail-' + number).html(_html);
-//     $("[id^='post-detail-']").each(function(){   //hide the visible one
-//         $(this).not("[id*='" + number + "']").hide();
-//     });
-//
-//     $('#post-detail-' + number).toggle();
-// }
 
 /***************************************************************************
  *************************

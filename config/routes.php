@@ -68,6 +68,6 @@ $app->group('', function () {
 //})->add(new MyAuthenticator());
 //})->add(new BasicAuthenticator());
 //})->add(new BearerAuthenticator());
-//})->add(new JWTAuthenticator());
-});
+})->add(new JWTAuthenticator());
+//});
 $app->run();

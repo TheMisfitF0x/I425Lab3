@@ -101,7 +101,7 @@ function displayWarehouseOrdersPreview(warehouse, orders) {
     }
 
     // set modal title and content
-    $('#modal-title').html("Orders within warehouse " + warehouse);
+    $('#modal-title').html("Orders Within Warehouse " + warehouse);
     $('#modal-button-ok').hide();
     $('#modal-button-close').html('Close').off('click');
     $('#modal-content').html(_html);

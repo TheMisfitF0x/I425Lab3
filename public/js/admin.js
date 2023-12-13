@@ -10,7 +10,7 @@ function showAllProducts(offset = 0) {
     let sort = ($("#product-sort-select").length) ? $('#product-sort-select option:checked').val() : "id:asc";
     //construct the request url
     //const url = baseUrl_API + '/products?limit=' + limit + "&offset=" + offset + "&sort=" + sort;
-    const url = baseUrl_API + '/products';
+    const url = baseUrl_API + '/products?limit=10000';
     fetch(url, {
         method: 'GET',
         headers: {"Authorization": "Bearer " + jwt}
@@ -80,6 +80,7 @@ function displayAllProducts(products, subheading=null) {
 
     //Finally, update the page
     subheading = (subheading == null) ? 'All Products' : subheading;
+
     updateMain('Products', subheading, _html);
 }
 

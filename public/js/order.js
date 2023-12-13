@@ -36,6 +36,7 @@ function displayOrders (response) {
         "<div class='content-row content-row-header'>" +
         "<div class='order-id'>Order ID</></div>" +
         "<div class='order-warehouse_id'>Warehouse ID</></div>" +
+        "<div class='order-product_id'>Product ID</></div>" +
         "<div class='order-cost'>Cost</></div>" +
         "<div class='order-user_id'>User ID</></div>" +
         "<div class='order-date'>Date Created</></div>" +
@@ -46,6 +47,7 @@ function displayOrders (response) {
         _html += "<div class='" + cssClass + "'>" +
             "<div class='order-id'>" + order.id + "</div>" +
             "<div class='order-warehouse_id'>" + order.warehouse_id + "</div>" +
+            "<div class='order-product_id'>" + order.product_id + "</div>" +
             "<div class='order-cost'>$" + order.cost + "</div>" +
             "<div class='order-user_id'>" + order.user_id + "</div>" +
             "<div class='order-date'>" + order.date_created + "</div>" +
